@@ -20,7 +20,6 @@ import { FeatureProps } from './types';
 
 export const Product = ({id, title, url, picture, publisher, paid, created_at }: FeatureProps) => {
   return (
-    <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
       <Stack
         h="full"
         minH={36}
@@ -53,12 +52,17 @@ export const Product = ({id, title, url, picture, publisher, paid, created_at }:
         >
           <GridItem pl='2' area={'image'} >
             <Box>
+            <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
               <Image src={picture} alt={title} position={'relative'} fallbackSrc='/bze.svg'></Image>
+            </Link>
             </Box>
           </GridItem>
           <GridItem pl='2' area={'title'} fontSize={'2xl'}>
-            #{id}.{' '}{title}{' '}
-            <ExternalLinkIcon mx='1px' />
+            <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
+              #{id}.{' '}{title}{' '}
+              <ExternalLinkIcon mx='1px' />
+            </Link>
+          </GridItem>
           <GridItem pl='2' area={'body'}>
             {
               paid ? (
@@ -69,15 +73,13 @@ export const Product = ({id, title, url, picture, publisher, paid, created_at }:
             <Badge borderRadius='full' px='2' colorScheme='orange'>just published</Badge>
             <Badge borderRadius='full' px='2' colorScheme='purple'>medium.com content</Badge>
             <Badge borderRadius='full' px='2' colorScheme='yellow'>highly trusted publisher</Badge>
-          
-          </GridItem>
           </GridItem>
           <GridItem pl='2' area={'footer'} fontSize={'sm'}>
             <Flex direction={{md: 'row'}}>
               <Text>{' Published by '}
-              {
-                true ? (<Badge borderRadius='full' px='2' colorScheme='purple'>{publisher}</Badge>) : ''
-              }
+              <Link href={'#'} _hover={{ textDecoration: 'none' }}>
+                <Badge borderRadius='full' px='2' colorScheme='purple'>{publisher}</Badge>
+              </Link>
               </Text>
               <Spacer/>
               <Text align={'right'}>
@@ -86,85 +88,7 @@ export const Product = ({id, title, url, picture, publisher, paid, created_at }:
             </Flex>
           </GridItem>
         </Grid>
-
-        {/* <Grid
-          templateAreas={`"header header"
-                          "nav main"
-                          "nav footer"`}
-          gridTemplateRows={'50px 1fr 30px'}
-          gridTemplateColumns={'150px 1fr'}
-          h='100%'
-          gap='1'
-          // color='blackAlpha.700'
-          fontWeight='bold'
-        >
-          <GridItem pl='2' area={'header'} fontSize={'2xl'}>
-          #{id}.{' '}{title}&ensp;&rarr;{' '}
-          {
-            paid ? (
-            <Badge borderRadius='full' px='2' colorScheme='yellow'>
-              Paid Article
-            </Badge>) : ''
-          }
-          </GridItem>
-          <GridItem pl='2' area={'nav'}>
-            <Center>
-              <Image src={picture} alt={title} position={'relative'} align={'center'} fallbackSrc='/bze.svg'></Image>
-            </Center>
-          </GridItem>
-          <GridItem pl='2' area={'main'} fontSize={'sm'}>
-            <Badge borderRadius='full' px='2' colorScheme='purple'>
-                 medium.com content
-            </Badge>
-            <Text>{' '}Published by{' '}
-            {
-              true ? (
-              <Badge borderRadius='full' px='2' colorScheme='purple'>
-                 {publisher}
-              </Badge>) : ''
-            }
-            </Text>
-          
-          </GridItem>
-          <GridItem pl='2' h={'100%'} area={'footer'} fontSize={'sm'}>
-          {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000)}
-          </GridItem>
-        </Grid> */}
-
-        {/* <Heading fontSize="xl">#{id}.{' '}{title}&ensp;&rarr;{' '}
-          {
-            paid ? (
-            <Badge borderRadius='full' px='2' colorScheme='yellow'>
-              Paid Article
-            </Badge>) : ''
-          }
-          {
-            true ? (
-            <Badge borderRadius='full' px='2' colorScheme='purple'>
-              New!
-            </Badge>) : ''
-          }
-          </Heading>
-        <Text>{url}</Text>
-        <Flex direction='row'>
-          <Box p={5} shadow='md' borderWidth='1px' borderRadius='lg'>
-            <Heading fontSize={'sm'}>{'Publisher'}</Heading>
-            <Text fontSize={'sm'} mt={1}>{publisher}</Text>
-          </Box>
-          <Spacer/>
-          <Box p={5} shadow='md' borderWidth='1px' borderRadius='lg'>
-            <Heading fontSize={'sm'}>{'Date'}</Heading>
-            <Text fontSize={'sm'} mt={1}>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000)}</Text>
-          </Box>
-        </Flex> */}
-
-
-        {/* <Grid templateColumns='repeat(5, 1fr)' gap={4} fontWeight='bold'>
-          <GridItem colSpan={2} h='10'>Published by:{' '}{publisher}</GridItem>
-          <GridItem colStart={6} colEnd={8} h='10'>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000)}</GridItem>
-        </Grid> */}
       </Stack>
-    </Link>
   );
 };
 
