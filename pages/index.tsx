@@ -4,15 +4,14 @@ import {
   Grid,
   Heading,
   Text,
-  Stack,
   Container,
-  Link,
   useColorModeValue
 } from '@chakra-ui/react';
 import { Product, Dependency, WalletSection } from '../components';
 import { dependencies, products } from '../config';
 import Navbar from '../components/navbar';
 import NextHead from '../components/next-head';
+import Footer from '../components/footer';
 
 export default function Home() {
 
@@ -64,30 +63,7 @@ export default function Home() {
       <Box mb={3}>
         <Divider />
       </Box>
-      <Stack
-        isInline={true}
-        spacing={1}
-        justifyContent="center"
-        opacity={0.5}
-        fontSize="sm"
-      >
-        <Text>Built with</Text>
-        <Link
-          href="https://cosmology.tech/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Cosmology 
-        </Link>
-        <Text>and Love by</Text>
-        <Link
-          href="https://getbze.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          BZE Alpha Team
-          </Link>
-      </Stack>
+      <Footer/>
     </Container>
   );
 }
