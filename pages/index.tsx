@@ -77,8 +77,16 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Cosmology
+          Cosmology 
         </Link>
+        <Text>and Love by</Text>
+        <Link
+          href="https://getbze.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          BZE Alpha Team
+          </Link>
       </Stack>
     </Container>
   );

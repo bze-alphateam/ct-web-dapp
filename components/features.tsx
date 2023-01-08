@@ -2,7 +2,6 @@ import { LinkIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   Box,
   Flex,
-  Heading,
   Icon,
   Link,
   Spacer,
@@ -13,9 +12,7 @@ import {
   useColorModeValue,
   Badge,
   Image,
-  Center,
 } from '@chakra-ui/react';
-import { create } from 'domain';
 import { FeatureProps } from './types';
 
 export const Product = ({id, title, url, picture, publisher, paid, created_at }: FeatureProps) => {
@@ -77,9 +74,9 @@ export const Product = ({id, title, url, picture, publisher, paid, created_at }:
           <GridItem pl='2' area={'footer'} fontSize={'sm'}>
             <Flex direction={{md: 'row'}}>
               <Text>{' Published by '}
-              <Link href={'#'} _hover={{ textDecoration: 'none' }}>
-                <Badge borderRadius='full' px='2' colorScheme='purple'>{publisher}</Badge>
-              </Link>
+                <Link href={'#'} _hover={{ textDecoration: 'none' }}>
+                  <Badge borderRadius='full' px='2' colorScheme='purple'>{publisher}</Badge>
+                </Link>
               </Text>
               <Spacer/>
               <Text align={'right'}>
