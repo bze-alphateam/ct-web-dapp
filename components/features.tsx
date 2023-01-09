@@ -28,10 +28,10 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
           '0 1px 3px #727272, 0 2px 12px -2px #2f2f2f'
         )}
         _hover={{
-          color: useColorModeValue('purple.600', 'purple.300'),
+          color: useColorModeValue('#0aa4d2', '#48d5ff'),
           boxShadow: useColorModeValue(
-            '0 2px 5px #bca5e9',
-            '0 0 3px rgba(150, 75, 213, 0.8), 0 3px 8px -2px rgba(175, 89, 246, 0.9)'
+            '0 2px 5px #0aa4d2',
+            '0 0 3px rgb(72 213 255), 0 3px 8px -2px rgb(121 216 244)'
           )
         }}
       >
