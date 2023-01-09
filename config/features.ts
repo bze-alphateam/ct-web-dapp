@@ -2,6 +2,24 @@ import { FeatureProps } from '../components';
 
 export const products: FeatureProps[] = [
   {
+    id: "7",
+    title: 'Osmosis Ecosystem Spotlight: Phase Finance - building automated investing strategies for Osmosis users: Phase DCA strategy',
+    url: 'https://medium.com/osmosis/osmosis-ecosystem-spotlight-phase-finance-b3d565efe531',
+    picture: 'https://miro.medium.com/max/720/0*yJUm_Jd0iKbDTPC5.webp',
+    publisher: "Osmosis Announcer",
+    paid: true,
+    created_at: "1673295916"
+  },
+  {
+    id: "6",
+    title: 'Osmosis Ecosystem Spotlight: Laika - a request builder for smart contract developers, similar to popular web2 tools like cURL, Postman, Hoppscotch, and Insomnia',
+    url: 'https://medium.com/osmosis/osmosis-ecosystem-spotlight-laika-5570f5268f5e',
+    picture: 'https://miro.medium.com/max/720/1*VrScVeHybgDjF7L8o_aSdg.webp',
+    publisher: "Osmosis Announcer",
+    paid: true,
+    created_at: "1673295916"
+  },
+  {
     id: "5",
     title: 'Trust is a must!',
     url: 'https://medium.com/bzedge-community/trust-is-a-must-96cac5de30d6',

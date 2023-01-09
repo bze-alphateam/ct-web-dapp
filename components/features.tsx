@@ -1,5 +1,6 @@
 import { LinkIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import {
+  Avatar,
   Box,
   Flex,
   Icon,
@@ -12,6 +13,8 @@ import {
   useColorModeValue,
   Badge,
   Image,
+  Heading,
+  Center,
 } from '@chakra-ui/react';
 import { ArticleProps, FeatureProps } from './types';
 
@@ -20,7 +23,7 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
       <Stack
         h="full"
         minH={36}
-        p={5}
+        p={2}
         spacing={2.5}
         justifyContent="center"
         borderRadius={5}
@@ -36,55 +39,47 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
           )
         }}
       >
-        <Grid
-          templateAreas={{
-            base: `"image" "title" "body" "footer"`,
-            md: `"image title" "image body" "image footer"`,
-          }}
-          gridTemplateRows={{base: 'fr', md: '50px fr 30px'}}
-          gridTemplateColumns={{base: '100%', md: '150px 1fr'}}
-          h='100%'
-          gap='2'
-          fontWeight='bold'
-        >
-          <GridItem pl='2' area={'image'} >
-            <Box>
+        <Flex direction={{base: 'column', md: 'row'}} padding={2}>
+          <Flex padding={2} justifyContent={'center'}>
+            <Box maxW={{base: '150px', md: '180px'}} overflow='hidden'>
               <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
-                <Image src={picture} alt={title} position={'relative'} fallbackSrc='/bze.svg'></Image>
+                <Avatar size='2xl' name='Coin Trunk' src={picture} bg={'#cceeff'}/>
               </Link>
             </Box>
-          </GridItem>
-          <GridItem pl='2' area={'title'} fontSize={'2xl'}>
-            <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
-              #{id}.{' '}{title}{' '}
-              <ExternalLinkIcon mx='1px' />
-            </Link>
-          </GridItem>
-          <GridItem pl='2' area={'body'}>
-            {
-              paid ? (
-              <Badge borderRadius='full' px='2' colorScheme='red'>
-                Paid Article
-              </Badge>) : ''
-            }
-            <Badge borderRadius='full' px='2' colorScheme='orange'>just published</Badge>
-            <Badge borderRadius='full' px='2' colorScheme='purple'>medium.com content</Badge>
-            <Badge borderRadius='full' px='2' colorScheme='yellow'>highly trusted publisher</Badge>
-          </GridItem>
-          <GridItem pl='2' area={'footer'} fontSize={'sm'}>
-            <Flex direction={{md: 'row'}}>
-              <Text>{' Published by '}
+          </Flex>
+          <Flex padding={2} justifyContent={'center'} direction={{base: 'column'}} flex={'100%'}>
+            <Flex p={2}>
+              <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
+                <Heading fontSize={'24px'}> #{id}.{' '}{title}{' '}<ExternalLinkIcon mx='1px' /></Heading>
+              </Link>
+            </Flex>
+            <Flex p={2} wrap={'wrap'} m={1}>
+              {
+                paid ? (
+                <Badge borderRadius='full' px='2' colorScheme='red'>
+                  Paid Article
+                </Badge>) : ''
+              }
+              <Badge borderRadius='full' px='2' colorScheme='orange'>just published</Badge>
+              <Badge borderRadius='full' px='2' colorScheme='purple'>medium.com content</Badge>
+              <Badge borderRadius='full' px='2' colorScheme='yellow'>highly trusted publisher</Badge>
+            </Flex>
+            <Flex direction={{base: 'column', md: 'row'}} fontSize={'sm'} fontWeight={'bold'}  m={1}>
+              <Box p='2'>
+                  {' Published by '}
                 <Link href={'#'} _hover={{ textDecoration: 'none' }}>
                   <Badge borderRadius='full' px='2' colorScheme='purple'>{publisher}</Badge>
                 </Link>
-              </Text>
+              </Box>
               <Spacer/>
-              <Text align={'right'}>
-                {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000)}
-              </Text>
+              <Box p='2'>
+                <Text align={{md: 'right'}}>
+                  {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000)}
+                </Text>
+              </Box>
             </Flex>
-          </GridItem>
-        </Grid>
+          </Flex>
+        </Flex>
       </Stack>
   );
 };
