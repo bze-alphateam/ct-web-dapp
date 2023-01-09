@@ -32,6 +32,15 @@ export interface ConnectedUserCardType {
   icon?: ReactNode;
 }
 
+export interface PublisherProps {
+  name: string,
+  address: string,
+  active: boolean,
+  articles_count: number,
+  created_at: string,
+  respect: string,
+}
+
 export interface ArticleProps {
   id: string;
   title: string;

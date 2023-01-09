@@ -4,3 +4,4 @@ export * from './features';
 export * from './wallet';
 export * from './navbar';
 export * from './next-head';
+export * from './article';

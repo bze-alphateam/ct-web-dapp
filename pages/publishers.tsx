@@ -17,9 +17,10 @@ import {
   useColorModeValue
 } from '@chakra-ui/react';
 import { Dependency, WalletSection } from '../components';
-import { dependencies, products } from '../config';
+import { dependencies, articles } from '../config';
 import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
+import Footer from '../components/footer';
 
 export default function Publishers() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -45,7 +46,7 @@ export default function Publishers() {
           <Text as="span">Viewing all&nbsp;</Text>
           <Text
             as="span"
-            color={useColorModeValue('primary.500', 'primary.200')}
+            color={useColorModeValue('#0aa4d2', '#48d5ff')}
           >
             CoinTrunk Publishers
           </Text>
@@ -72,22 +73,7 @@ export default function Publishers() {
       <Box mb={3}>
         <Divider />
       </Box>
-      <Stack
-        isInline={true}
-        spacing={1}
-        justifyContent="center"
-        opacity={0.5}
-        fontSize="sm"
-      >
-        <Text>Built with</Text>
-        <Link
-          href="https://cosmology.tech/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Cosmology
-        </Link>
-      </Stack>
+      <Footer/>
     </Container>
   );
 }

@@ -1,6 +1,33 @@
-import { FeatureProps } from '../components';
+import { FeatureProps, ArticleProps, PublisherProps } from '../components';
 
-export const products: FeatureProps[] = [
+export const publishers: PublisherProps[] = [
+  {
+    name: "BZE Alpha Team",
+    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
+    active: true,
+    articles_count: 31,
+    created_at: "1672447133",
+    respect: "1200001000000"
+  },
+  {
+    name: "Osmosis Publisher",
+    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
+    active: true,
+    articles_count: 57,
+    created_at: "1672447133",
+    respect: "1200001000000"
+  },
+  {
+    name: "Cosmos News Hub",
+    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
+    active: true,
+    articles_count: 1,
+    created_at: "1672447133",
+    respect: "1200001000000"
+  },
+]
+
+export const articles: ArticleProps[] = [
   {
     id: "7",
     title: 'Osmosis Ecosystem Spotlight: Phase Finance - building automated investing strategies for Osmosis users: Phase DCA strategy',

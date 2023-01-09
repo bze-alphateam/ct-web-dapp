@@ -7,8 +7,8 @@ import {
   Container,
   useColorModeValue
 } from '@chakra-ui/react';
-import { Article, Dependency, WalletSection } from '../components';
-import { dependencies, products } from '../config';
+import { Article, Dependency } from '../components';
+import { dependencies, articles } from '../config';
 import Navbar from '../components/navbar';
 import NextHead from '../components/next-head';
 import Footer from '../components/footer';
@@ -51,8 +51,8 @@ export default function Home() {
         mb={14}
         mt={20}
       >
-        {products.map((product) => (
-          <Article key={product.title} {...product}></Article>
+        {articles.map((article) => (
+          <Article key={article.title} {...article}></Article>
         ))}
       </Grid>
       <Grid templateColumns={{ md: '1fr 1fr' }} gap={8} mb={20}>
