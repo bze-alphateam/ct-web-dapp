@@ -6,15 +6,11 @@ import {
   Icon,
   Link,
   Spacer,
-  Grid,
-  GridItem,
   Stack,
   Text,
   useColorModeValue,
   Badge,
-  Image,
   Heading,
-  Center,
 } from '@chakra-ui/react';
 import { ArticleProps, FeatureProps } from './types';
 
@@ -54,21 +50,21 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
               </Link>
             </Flex>
             <Flex p={2} wrap={'wrap'} m={1}>
+              <Badge borderRadius='full' px='2' colorScheme='orange'>just published</Badge>
+              <Badge borderRadius='full' px='2' colorScheme='cyan'>medium.com content</Badge>
+              <Badge borderRadius='full' px='2' colorScheme='yellow'>highly trusted publisher</Badge>
               {
                 paid ? (
                 <Badge borderRadius='full' px='2' colorScheme='red'>
                   Paid Article
                 </Badge>) : ''
               }
-              <Badge borderRadius='full' px='2' colorScheme='orange'>just published</Badge>
-              <Badge borderRadius='full' px='2' colorScheme='purple'>medium.com content</Badge>
-              <Badge borderRadius='full' px='2' colorScheme='yellow'>highly trusted publisher</Badge>
             </Flex>
             <Flex direction={{base: 'column', md: 'row'}} fontSize={'sm'} fontWeight={'bold'}  m={1}>
               <Box p='2'>
                   {' Published by '}
                 <Link href={'#'} _hover={{ textDecoration: 'none' }}>
-                  <Badge borderRadius='full' px='2' colorScheme='purple'>{publisher}</Badge>
+                  <Badge borderRadius='full' px='2' colorScheme='blue'>{publisher}</Badge>
                 </Link>
               </Box>
               <Spacer/>

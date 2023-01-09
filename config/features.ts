@@ -17,7 +17,7 @@ export const products: FeatureProps[] = [
     picture: 'https://miro.medium.com/max/720/1*VrScVeHybgDjF7L8o_aSdg.webp',
     publisher: "Osmosis Announcer",
     paid: true,
-    created_at: "1673295916"
+    created_at: "1673293316"
   },
   {
     id: "5",

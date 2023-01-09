@@ -36,7 +36,7 @@ export default function Home() {
           <Text as="span">View latest&nbsp;</Text>
           <Text
             as="span"
-            color={useColorModeValue('primary.500', 'primary.200')}
+            color={useColorModeValue('#0aa4d2', '#48d5ff')}
           >
             CoinTrunk articles
           </Text>
