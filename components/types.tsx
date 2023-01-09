@@ -32,6 +32,16 @@ export interface ConnectedUserCardType {
   icon?: ReactNode;
 }
 
+export interface ArticleProps {
+  id: string;
+  title: string;
+  url: string;
+  picture: string;
+  publisher: string;
+  paid: boolean;
+  created_at: string
+}
+
 export interface FeatureProps {
   id: string;
   title: string;
@@ -39,7 +49,7 @@ export interface FeatureProps {
   picture: string;
   publisher: string;
   paid: boolean;
-  created_at: number
+  created_at: string
 }
 
 export interface ChainCardProps {

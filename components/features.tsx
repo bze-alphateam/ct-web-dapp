@@ -13,9 +13,9 @@ import {
   Badge,
   Image,
 } from '@chakra-ui/react';
-import { FeatureProps } from './types';
+import { ArticleProps, FeatureProps } from './types';
 
-export const Product = ({id, title, url, picture, publisher, paid, created_at }: FeatureProps) => {
+export const Article = ({id, title, url, picture, publisher, paid, created_at }: ArticleProps) => {
   return (
       <Stack
         h="full"
@@ -49,9 +49,9 @@ export const Product = ({id, title, url, picture, publisher, paid, created_at }:
         >
           <GridItem pl='2' area={'image'} >
             <Box>
-            <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
-              <Image src={picture} alt={title} position={'relative'} fallbackSrc='/bze.svg'></Image>
-            </Link>
+              <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
+                <Image src={picture} alt={title} position={'relative'} fallbackSrc='/bze.svg'></Image>
+              </Link>
             </Box>
           </GridItem>
           <GridItem pl='2' area={'title'} fontSize={'2xl'}>
