@@ -16,8 +16,8 @@ import {
   useColorMode,
   useColorModeValue
 } from '@chakra-ui/react';
-import { Dependency, WalletSection } from '../components';
-import { dependencies, articles } from '../config';
+import { Dependency, Publisher } from '../components';
+import { dependencies, publishers } from '../config';
 import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
@@ -61,9 +61,9 @@ export default function Publishers() {
         gap={8}
         mb={14}
       >
-        {/* {products.map((product) => (
-          <Product key={product.title} {...product}></Product>
-        ))} */}
+        {publishers.map((publisher) => (
+          <Publisher key={publisher.address} {...publisher}></Publisher>
+        ))}
       </Grid>
       <Grid templateColumns={{ md: '1fr 1fr' }} gap={8} mb={20}>
         {dependencies.map((dependency) => (

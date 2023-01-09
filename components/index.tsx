@@ -5,3 +5,4 @@ export * from './wallet';
 export * from './navbar';
 export * from './next-head';
 export * from './article';
+export * from './publisher';
