@@ -1,4 +1,4 @@
-import { FeatureProps, ArticleProps, PublisherProps } from '../components';
+import { ArticleProps, PublisherProps, Info } from '../components';
 
 export const publishers: PublisherProps[] = [
   {
@@ -92,23 +92,13 @@ export const articles: ArticleProps[] = [
   },
 ];
 
-export const dependencies: FeatureProps[] = [
+export const infoGrid: Info[] = [
   {
-    id: "5",
     title: 'CoinTrunk is a decentralized App governed by BZE community. All articles are published under BZE blockchain & community rules. Read more about CoinTrunk!',
     url: 'https://medium.com/bzedge-community/introducing-cointrunk-2ed357a9f22b',
-    picture: 'https://medium.com/bzedge-community/trust-is-a-must-96cac5de30d6',
-    publisher: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
-    paid: false,
-    created_at: "1672867506"
   },
   {
-    id: "5",
     title: 'Stay up to date with BZE & CoinTrunk news. Give our Medium articles a few minutes to find out more.',
     url: 'https://medium.com/bzedge-community',
-    picture: 'https://medium.com/bzedge-community/trust-is-a-must-96cac5de30d6',
-    publisher: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
-    paid: false,
-    created_at: "1672867506"
   },
 ];

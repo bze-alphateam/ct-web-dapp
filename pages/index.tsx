@@ -2,16 +2,14 @@ import {
   Box,
   Divider,
   Grid,
-  Heading,
-  Text,
   Container,
-  useColorModeValue
 } from '@chakra-ui/react';
-import { Article, Dependency, TitleBox, PageTitleProps } from '../components';
-import { dependencies, articles } from '../config';
+import { Article, TitleBox, PageTitleProps } from '../components';
+import { infoGrid, articles } from '../config';
 import Navbar from '../components/navbar';
 import NextHead from '../components/next-head';
 import Footer from '../components/footer';
+import { InfoGrid } from '../components/info-grid';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Articles',
@@ -20,7 +18,6 @@ const pageTitleBox: PageTitleProps = {
 }
 
 export default function Home() {
-
   return (
     <Container maxW="7xl" py={5}>
       <NextHead></NextHead>
@@ -39,11 +36,7 @@ export default function Home() {
           <Article key={article.title} {...article}></Article>
         ))}
       </Grid>
-      <Grid templateColumns={{ md: '1fr 1fr' }} gap={8} mb={20}>
-        {dependencies.map((dependency) => (
-          <Dependency key={dependency.title} {...dependency}></Dependency>
-        ))}
-      </Grid>
+      <InfoGrid key='info-art' info={infoGrid}></InfoGrid>
       <Box mb={3}>
         <Divider />
       </Box>

@@ -74,3 +74,18 @@ export type CopyAddressType = {
   isRound?: boolean;
   size?: string;
 };
+
+export type PageTitleProps = {
+  title: string,
+  subTitle: string,
+  subTitleHighlighted: string,
+}
+
+export type Info = {
+  url: string,
+  title: string,
+}
+
+export type InfoList = {
+  info: Info[]
+}
