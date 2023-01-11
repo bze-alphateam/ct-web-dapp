@@ -45,7 +45,7 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
             <Flex padding={2} justifyContent={'center'} direction={{base: 'column'}} flex={'100%'}>
               <Flex p={2}>
                 <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
-                  <Heading fontSize={'24px'}> #{id}.{' '}{title}{' '}<ExternalLinkIcon mx='1px'/></Heading>
+                  <Heading fontSize={{base: '18px', md: '22px'}}> #{id}.{' '}{title}{' '}<ExternalLinkIcon mx='1px'/></Heading>
                 </Link>
               </Flex>
               <Flex p={2} wrap={'wrap'} m={1}>
