@@ -45,7 +45,7 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
             <Flex padding={2} justifyContent={'center'} direction={{base: 'column'}} flex={'100%'}>
               <Flex p={2}>
                 <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
-                  <Heading fontSize={'24px'}> #{id}.{' '}{title}{' '}<ExternalLinkIcon mx='1px' /></Heading>
+                  <Heading fontSize={'24px'}> #{id}.{' '}{title}{' '}<ExternalLinkIcon mx='1px'/></Heading>
                 </Link>
               </Flex>
               <Flex p={2} wrap={'wrap'} m={1}>
@@ -60,16 +60,15 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
                 }
               </Flex>
               <Flex direction={{base: 'column', md: 'row'}} fontSize={'sm'} fontWeight={'bold'}  m={1}>
-                <Box p='2'>
-                    {' Published by '}
-                  <Link href={'#'} _hover={{ textDecoration: 'none' }}>
-                    <Badge borderRadius='full' px='2' colorScheme='blue'>{publisher}</Badge>
-                  </Link>
-                </Box>
+                <Box p='2'/>
                 <Spacer/>
                 <Box p='2'>
                   <Text align={{md: 'right'}}>
-                    {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000)}
+                    {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000)}
+                    {' by '}
+                    <Link href={'#'}>
+                      {publisher}
+                    </Link>
                   </Text>
                 </Box>
               </Flex>
