@@ -52,14 +52,14 @@ export default function Publishers() {
           </Text>
         </Heading>
       </Box>
-      {/* <WalletSection /> */}
       <Grid
         templateColumns={{
-          md: 'repeat(2, 1fr)',
-          lg: 'repeat(3, 1fr)'
+          md: 'repeat(1, 1fr)',
+          lg: 'repeat(1, 1fr)'
         }}
         gap={8}
         mb={14}
+        mt={20}
       >
         {publishers.map((publisher) => (
           <Publisher key={publisher.address} {...publisher}></Publisher>

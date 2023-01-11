@@ -2,10 +2,18 @@ import { FeatureProps, ArticleProps, PublisherProps } from '../components';
 
 export const publishers: PublisherProps[] = [
   {
+    name: "Gigi de la coltz",
+    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
+    active: false,
+    articles_count: 1,
+    created_at: "1672447133",
+    respect: "0"
+  },
+  {
     name: "BZE Alpha Team",
     address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
     active: true,
-    articles_count: 31,
+    articles_count: 13,
     created_at: "1672447133",
     respect: "1200001000000"
   },
@@ -15,7 +23,7 @@ export const publishers: PublisherProps[] = [
     active: true,
     articles_count: 57,
     created_at: "1672447133",
-    respect: "1200001000000"
+    respect: "800001000000"
   },
   {
     name: "Cosmos News Hub",
@@ -23,7 +31,7 @@ export const publishers: PublisherProps[] = [
     active: true,
     articles_count: 1,
     created_at: "1672447133",
-    respect: "1200001000000"
+    respect: "11902000000"
   },
 ]
 

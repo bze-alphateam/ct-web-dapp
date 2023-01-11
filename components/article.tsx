@@ -51,7 +51,7 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
               <Flex p={2} wrap={'wrap'} m={1}>
                 <Badge borderRadius='full' px='2' colorScheme='orange'>just published</Badge>
                 <Badge borderRadius='full' px='2' colorScheme='cyan'>medium.com content</Badge>
-                <Badge borderRadius='full' px='2' colorScheme='yellow'>highly trusted publisher</Badge>
+                <Badge borderRadius='full' px='2' colorScheme='teal'>highly trusted publisher</Badge>
                 {
                   paid ? (
                   <Badge borderRadius='full' px='2' colorScheme='red'>
