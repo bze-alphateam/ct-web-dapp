@@ -7,11 +7,17 @@ import {
   Container,
   useColorModeValue
 } from '@chakra-ui/react';
-import { Article, Dependency } from '../components';
+import { Article, Dependency, TitleBox, PageTitleProps } from '../components';
 import { dependencies, articles } from '../config';
 import Navbar from '../components/navbar';
 import NextHead from '../components/next-head';
 import Footer from '../components/footer';
+
+const pageTitleBox: PageTitleProps = {
+  title: 'Articles',
+  subTitle: 'View latest',
+  subTitleHighlighted: 'CoinTrunk articles'
+}
 
 export default function Home() {
 
@@ -19,29 +25,7 @@ export default function Home() {
     <Container maxW="7xl" py={5}>
       <NextHead></NextHead>
       <Navbar current='Articles'></Navbar>
-      <Box textAlign="center">
-        <Heading
-          as="h1"
-          fontSize={{ base: '3xl', sm: '4xl', md: '5xl' }}
-          fontWeight="extrabold"
-          mb={3}
-        >
-          Articles
-        </Heading>
-        <Heading
-          as="h1"
-          fontWeight="bold"
-          fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}
-        >
-          <Text as="span">View latest&nbsp;</Text>
-          <Text
-            as="span"
-            color={useColorModeValue('#0aa4d2', '#48d5ff')}
-          >
-            CoinTrunk articles
-          </Text>
-        </Heading>
-      </Box>
+      <TitleBox key={pageTitleBox.title} {...pageTitleBox} ></TitleBox>
       <Grid
         templateColumns={{
           md: 'repeat(1, 1fr)',
