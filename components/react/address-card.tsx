@@ -96,7 +96,7 @@ export const ConnectedShowAddress = ({
       display="flex"
       alignItems="center"
       justifyContent="center"
-      borderRadius={isRound ? 'full' : 'lg'}
+      borderRadius={5}
       border="1px solid"
       borderColor={handleChangeColorModeValue(
         colorMode,
@@ -140,7 +140,7 @@ export const ConnectedShowAddress = ({
     >
       {address && walletIcon && (
         <Box
-          borderRadius="full"
+          borderRadius="15"
           w="full"
           h="full"
           minW={SIZES[size as keyof typeof SIZES].walletImageSize}
@@ -157,7 +157,7 @@ export const ConnectedShowAddress = ({
         fontSize={SIZES[size as keyof typeof SIZES].fontSize}
         fontWeight="normal"
         letterSpacing="0.4px"
-        opacity={0.75}
+        opacity={0.95}
       >
         {displayAddress}
       </Text>

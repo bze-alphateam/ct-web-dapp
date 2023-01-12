@@ -7,7 +7,7 @@ export const publishers: PublisherProps[] = [
     active: false,
     articles_count: 1,
     created_at: "1672447133",
-    respect: "0"
+    respect: "991300000"
   },
   {
     name: "BZE Alpha Team",
@@ -15,7 +15,7 @@ export const publishers: PublisherProps[] = [
     active: true,
     articles_count: 13,
     created_at: "1672447133",
-    respect: "1200001000000"
+    respect: "1200000001000000"
   },
   {
     name: "Osmosis Publisher",
@@ -86,7 +86,7 @@ export const articles: ArticleProps[] = [
     title: 'Introducing CoinTrunk - A BZE Product for the Cosmos!',
     url: 'https://medium.com/bzedge-community/introducing-cointrunk-2ed357a9f22b',
     picture: 'https://miro.medium.com/max/720/1*4wk9rqFkGcS3G4w5zDXW-Q.webp',
-    publisher: "testbz1n850...44gsum",
+    publisher: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
     paid: true,
     created_at: "1672474233"
   },

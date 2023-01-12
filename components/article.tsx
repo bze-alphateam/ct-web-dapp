@@ -11,6 +11,7 @@ import {
   Badge,
   Heading,
 } from '@chakra-ui/react';
+import { stringTruncateFromCenter } from './react';
 import { ArticleProps } from './types';
 
 export const Article = ({id, title, url, picture, publisher, paid, created_at }: ArticleProps) => {
@@ -49,9 +50,9 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
                 </Link>
               </Flex>
               <Flex p={2} wrap={'wrap'} m={1}>
-                <Badge borderRadius='full' px='2' m={{base: 1}} colorScheme='orange'>just published</Badge>
-                <Badge borderRadius='full' px='2' m={{base: 1}} colorScheme='cyan'>medium.com content</Badge>
-                <Badge borderRadius='full' px='2' m={{base: 1}} colorScheme='teal'>highly trusted publisher</Badge>
+                <Badge px='2' m={{base: 1}} colorScheme='yellow'>just published</Badge>
+                <Badge px='2' m={{base: 1}} colorScheme='orange'>medium.com content</Badge>
+                <Badge px='2' m={{base: 1}} colorScheme='teal'>highly trusted publisher</Badge>
                 {
                   paid ? (
                   <Badge borderRadius='full' px='2' m={{base: 1}} colorScheme='red'>
@@ -64,11 +65,9 @@ export const Article = ({id, title, url, picture, publisher, paid, created_at }:
                 <Spacer/>
                 <Box p='2'>
                   <Text align={{md: 'right'}}>
-                    {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000)}
-                    {' by '}
-                    <Link href={'#'}>
-                      {publisher}
-                    </Link>
+                    {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: false,}).format(parseInt(created_at) * 1000) }
+                    {' '}&bull;{' '}
+                    <Link href={'#'}>{paid ? stringTruncateFromCenter(publisher, 24) : publisher}</Link>
                   </Text>
                 </Box>
               </Flex>
