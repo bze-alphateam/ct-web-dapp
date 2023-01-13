@@ -3,7 +3,7 @@ import { ArticleProps, PublisherProps, Info } from '../components';
 export const publishers: PublisherProps[] = [
   {
     name: "Gigi de la coltz",
-    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
+    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfc",
     active: false,
     articles_count: 1,
     created_at: "1672447133",
@@ -11,7 +11,7 @@ export const publishers: PublisherProps[] = [
   },
   {
     name: "BZE Alpha Team",
-    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
+    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfa",
     active: true,
     articles_count: 13,
     created_at: "1672447133",
@@ -19,7 +19,7 @@ export const publishers: PublisherProps[] = [
   },
   {
     name: "Osmosis Publisher",
-    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfs",
+    address: "testbz1w9vva0muctcrmd9xgret9x4wasw2rrflsdkwfb",
     active: true,
     articles_count: 57,
     created_at: "1672447133",
