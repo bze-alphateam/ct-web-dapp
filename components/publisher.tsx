@@ -1,6 +1,7 @@
 
 import {
   Box,
+  Button,
   Flex,
   Stack,
   Spacer,
@@ -13,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { PublisherProps } from './types';
 import { ConnectedShowAddress } from './react'
+import { StarIcon, EditIcon, CalendarIcon } from '@chakra-ui/icons';
 
 export const Publisher = ({name, address, active, articles_count, created_at, respect }: PublisherProps) => {
   const calculateRespectBadge = () => {
@@ -96,21 +98,21 @@ export const Publisher = ({name, address, active, articles_count, created_at, re
             <Flex p={1} direction={{base: 'column', md: 'row'}} borderWidth={'thin'} borderRadius={5}>
               <Box p={4}>
                 <Stat>
-                  <StatLabel>Since</StatLabel>
+                  <StatLabel>Since <CalendarIcon/></StatLabel>
                   <StatNumber>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short',day: '2-digit',}).format(parseInt(created_at) * 1000) }</StatNumber>
                 </Stat>
               </Box>
               <Spacer />
               <Box p='4' >
                 <Stat>
-                    <StatLabel>Articles</StatLabel>
+                    <StatLabel>Articles <EditIcon/></StatLabel>
                     <StatNumber>{articles_count}</StatNumber>
                 </Stat>
               </Box>
               <Spacer />
               <Box p='4'>
                 <Stat>
-                  <StatLabel>Respect</StatLabel>
+                  <StatLabel>Respect <StarIcon /></StatLabel>
                   <StatNumber>{Intl.NumberFormat('en', { notation: 'compact' }).format(parseInt(respect) / 1000000)}</StatNumber>
                 </Stat>
               </Box>
@@ -122,7 +124,9 @@ export const Publisher = ({name, address, active, articles_count, created_at, re
               </Box>
               <Spacer />
               <Box p='4'>
-                
+              <Button rightIcon={<StarIcon />} colorScheme='grey' variant='outline' size='xs'>
+                Pay Respect
+              </Button>
               </Box>
             </Flex>
           </Flex>
