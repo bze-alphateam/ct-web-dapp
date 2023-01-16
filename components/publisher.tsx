@@ -98,21 +98,21 @@ export const Publisher = ({name, address, active, articles_count, created_at, re
             <Flex p={1} direction={{base: 'column', md: 'row'}} borderWidth={'thin'} borderRadius={5}>
               <Box p={4}>
                 <Stat>
-                  <StatLabel>Since <CalendarIcon/></StatLabel>
+                  <StatLabel>Since <CalendarIcon mb={1}/></StatLabel>
                   <StatNumber>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short',day: '2-digit',}).format(parseInt(created_at) * 1000) }</StatNumber>
                 </Stat>
               </Box>
               <Spacer />
               <Box p='4' >
                 <Stat>
-                    <StatLabel>Articles <EditIcon/></StatLabel>
+                    <StatLabel>Articles <EditIcon mb={1}/></StatLabel>
                     <StatNumber>{articles_count}</StatNumber>
                 </Stat>
               </Box>
               <Spacer />
               <Box p='4'>
                 <Stat>
-                  <StatLabel>Respect <StarIcon /></StatLabel>
+                  <StatLabel>Respect <StarIcon mb={1}/></StatLabel>
                   <StatNumber>{Intl.NumberFormat('en', { notation: 'compact' }).format(parseInt(respect) / 1000000)}</StatNumber>
                 </Stat>
               </Box>
