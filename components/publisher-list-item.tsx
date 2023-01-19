@@ -13,47 +13,12 @@ import {
   StatNumber,
 } from '@chakra-ui/react';
 import { PublisherProps } from './types';
+import { PublisherArticlesCountBadge, PublisherRespectBadge } from './publisher-badges';
 import { ConnectedShowAddress } from './react'
 import { StarIcon, EditIcon, CalendarIcon } from '@chakra-ui/icons';
 
 export const PublisherListItem = ({name, address, active, articles_count, created_at, respect }: PublisherProps) => {
-  const calculateRespectBadge = () => {
-    const intRespect = parseInt(respect)
-    if (intRespect < 10000000000) {
-      return ''
-    }
-    let badgeColor = 'yellow'
-    let badgeText = 'respected'
-    if (intRespect > 100000000000) {
-      badgeColor = 'teal'
-      badgeText = 'highly respected'
-    }
-
-    return (<Badge variant='solid' ml={1} colorScheme={badgeColor}>{badgeText}</Badge>)
-  }
-
-  const calculateArticlesCountBadge = () => {
-    let badgeColor = 'gray'
-    let badgeText = 'beginner'
-
-    switch (true) {
-      case articles_count >= 100:
-        badgeColor = 'green'
-        badgeText = '100 articles'
-        break;
-      case articles_count >= 50:
-        badgeColor = 'orange'
-        badgeText = '50 articles'
-        break;
-      case articles_count >= 10:
-        badgeColor = 'yellow'
-        badgeText = '10 articles'
-        break;
-    }
-
-    return (<Badge variant='solid' ml={1} colorScheme={badgeColor}>{badgeText}</Badge>)
-  }
-
+  
   return (
       <Stack
         h="full"
@@ -119,8 +84,8 @@ export const PublisherListItem = ({name, address, active, articles_count, create
             </Flex>
             <Flex p={1}>
               <Box p={4}>
-                {active && (calculateRespectBadge())}
-                {active && (calculateArticlesCountBadge())}
+                <PublisherRespectBadge respect={respect}/>
+                <PublisherArticlesCountBadge articlesCount={articles_count}/>
               </Box>
               <Spacer />
               <Box p='4'>
