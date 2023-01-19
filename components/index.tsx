@@ -4,6 +4,6 @@ export * from './features';
 export * from './wallet';
 export * from './navbar';
 export * from './next-head';
-export * from './article';
-export * from './publisher';
+export * from './article-list-item';
+export * from './publisher-list-item';
 export * from './title-box';

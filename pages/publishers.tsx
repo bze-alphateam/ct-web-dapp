@@ -6,7 +6,7 @@ import {
   Container,
   useColorMode,
 } from '@chakra-ui/react';
-import { PageTitleProps, Publisher, TitleBox } from '../components';
+import { PageTitleProps, PublisherListItem, TitleBox } from '../components';
 import { infoGrid, publishers } from '../config';
 import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
@@ -35,7 +35,7 @@ export default function Publishers() {
         mt={20}
       >
         {publishers.map((publisher) => (
-          <Publisher key={publisher.address} {...publisher}></Publisher>
+          <PublisherListItem key={publisher.address} {...publisher}></PublisherListItem>
         ))}
       </Grid>
       <InfoGrid key='info-pub' info={infoGrid}></InfoGrid>

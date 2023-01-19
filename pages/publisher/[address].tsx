@@ -5,7 +5,7 @@ import {
     Grid,
     Container,
   } from '@chakra-ui/react';
-import { PageTitleProps, Publisher, PublisherProps, TitleBox } from '../../components';
+import { PageTitleProps, PublisherListItem, PublisherProps, TitleBox } from '../../components';
 import { infoGrid, publishers } from '../../config';
 import NextHead from '../../components/next-head';
 import Navbar from '../../components/navbar';
@@ -46,7 +46,7 @@ export default function PublisherPage({publisher}: {publisher: PublisherProps}) 
             mb={14}
             mt={20}
         >
-            <Publisher key={publisher.address} {...publisher}></Publisher>
+            <PublisherListItem key={publisher.address} {...publisher}></PublisherListItem>
         </Grid>
         <InfoGrid key='info-pub' info={infoGrid}></InfoGrid>
         <Box mb={3}>

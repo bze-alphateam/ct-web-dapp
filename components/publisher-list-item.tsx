@@ -16,7 +16,7 @@ import { PublisherProps } from './types';
 import { ConnectedShowAddress } from './react'
 import { StarIcon, EditIcon, CalendarIcon } from '@chakra-ui/icons';
 
-export const Publisher = ({name, address, active, articles_count, created_at, respect }: PublisherProps) => {
+export const PublisherListItem = ({name, address, active, articles_count, created_at, respect }: PublisherProps) => {
   const calculateRespectBadge = () => {
     const intRespect = parseInt(respect)
     if (intRespect < 10000000000) {
