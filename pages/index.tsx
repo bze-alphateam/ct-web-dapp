@@ -15,7 +15,7 @@ import { InfoGrid } from '../components/info-grid';
 import { bze, Helpers } from '@bze/bzejs';
 import { QueryAllArticlesResponse } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
-import Long from 'long';
+import { paginationDefaultParams } from '../components/services';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Articles',
@@ -24,23 +24,13 @@ const pageTitleBox: PageTitleProps = {
 }
 
 export default function Home() {
-  
-  const createDefaultParams = (): Helpers.PageRequest => {
-    return {
-      key: new Uint8Array(),
-      offset: Long.fromNumber(0),
-      limit: Long.fromNumber(200),
-      countTotal: false,
-      reverse: true
-    }
-  }
   const [isLoading, setLoading] = useState(true)
   const [articlesListResponse, setArticlesListResponse] = useState<QueryAllArticlesResponse|null>(null)
 
   useEffect(() => {
     bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl})
     .then((client) => {
-      client.bze.cointrunk.v1.allArticles({pagination: createDefaultParams()})
+      client.bze.cointrunk.v1.allArticles({pagination: paginationDefaultParams()})
       .then((res) => {
         setArticlesListResponse(res)
         setLoading(false)

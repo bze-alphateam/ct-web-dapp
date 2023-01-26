@@ -13,10 +13,10 @@ import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { InfoGrid } from '../components/info-grid';
-import { bze, Helpers } from '@bze/bzejs';
+import { bze } from '@bze/bzejs';
 import { QueryPublisherResponse } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
-import Long from 'long';
 import { useEffect, useState } from 'react';
+import { paginationDefaultParams } from '../components/services';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Publishers',
@@ -24,24 +24,14 @@ const pageTitleBox: PageTitleProps = {
   subTitleHighlighted: 'CoinTrunk Publishers'
 }
 
-export default function Publishers() {
-  const createDefaultParams = (): Helpers.PageRequest => {
-    return {
-      key: new Uint8Array(),
-      offset: Long.fromNumber(0),
-      limit: Long.fromNumber(200),
-      countTotal: false,
-      reverse: true
-    }
-  }
-  
+export default function Publishers() {  
   const [isLoading, setLoading] = useState(true)
   const [publishersListResponse, setPublishersListResponse] = useState<QueryPublisherResponse|null>(null)
   
   useEffect(() => {
     bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl})
     .then((client) => {
-      client.bze.cointrunk.v1.publisher({pagination: createDefaultParams()})
+      client.bze.cointrunk.v1.publisher({pagination: paginationDefaultParams()})
       .then((res) => {
         setPublishersListResponse(res)
         setLoading(false)
