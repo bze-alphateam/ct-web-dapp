@@ -7,7 +7,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { ArticleListItem, TitleBox, PageTitleProps } from '../components';
-import { infoGrid } from '../config';
+import { infoGrid, rpcUrl } from '../config';
 import Navbar from '../components/navbar';
 import NextHead from '../components/next-head';
 import Footer from '../components/footer';
@@ -25,7 +25,6 @@ const pageTitleBox: PageTitleProps = {
 
 export default function Home() {
   
-  const rpcEndpoint = 'https://testnet-rpc.getbze.com/';
   const createDefaultParams = (): Helpers.PageRequest => {
     return {
       key: new Uint8Array(),
@@ -39,7 +38,7 @@ export default function Home() {
   const [articlesListResponse, setArticlesListResponse] = useState<QueryAllArticlesResponse|null>(null)
 
   useEffect(() => {
-    bze.ClientFactory.createRPCQueryClient({rpcEndpoint})
+    bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl})
     .then((client) => {
       client.bze.cointrunk.v1.allArticles({pagination: createDefaultParams()})
       .then((res) => {

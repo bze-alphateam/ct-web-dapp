@@ -8,7 +8,7 @@ import {
   Spinner
 } from '@chakra-ui/react';
 import { PageTitleProps, PublisherListItem, TitleBox } from '../components';
-import { infoGrid } from '../config';
+import { infoGrid, rpcUrl } from '../config';
 import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
@@ -25,7 +25,6 @@ const pageTitleBox: PageTitleProps = {
 }
 
 export default function Publishers() {
-  const rpcEndpoint = 'https://testnet-rpc.getbze.com/';
   const createDefaultParams = (): Helpers.PageRequest => {
     return {
       key: new Uint8Array(),
@@ -40,7 +39,7 @@ export default function Publishers() {
   const [publishersListResponse, setPublishersListResponse] = useState<QueryPublisherResponse|null>(null)
   
   useEffect(() => {
-    bze.ClientFactory.createRPCQueryClient({rpcEndpoint})
+    bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl})
     .then((client) => {
       client.bze.cointrunk.v1.publisher({pagination: createDefaultParams()})
       .then((res) => {

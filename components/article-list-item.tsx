@@ -20,8 +20,7 @@ import { bze } from '@bze/bzejs';
 import { LocallyCachedPublisher } from './types';
 import { respectBadgeParams } from './publisher-badges';
 import Long from "long";
-
-const rpcEndpoint = 'https://testnet-rpc.getbze.com/';
+import { rpcUrl, explorerBaseUrl } from '../config';
 
 const getPublisherData = async (publisher: string): Promise<Publisher|undefined> => {
   let localStorageKey = 'publisher:' + publisher;
@@ -37,7 +36,7 @@ const getPublisherData = async (publisher: string): Promise<Publisher|undefined>
     localStorage.removeItem(localStorageKey);
   }
   
-  const client = await bze.ClientFactory.createRPCQueryClient({rpcEndpoint});
+  const client = await bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl});
   const publisherResponse = await client.bze.cointrunk.v1.publisherByIndex({index: publisher});
   if (publisherResponse.publisher) {
     let cachePublisher = LocallyCachedPublisher.fromPublisher(publisherResponse.publisher);
@@ -129,12 +128,12 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
                         minute: '2-digit',
                         hour12: false,
                       }
-                    ).format(Long.fromValue(createdAt).toInt() * 1000)
+                    ).format(Long.fromValue(createdAt).mul(1000).toInt())
                   }
                   {' '}&bull;{' '}
                   {isLoading ?
                     (<Spinner as='span' size='sm'/>) :
-                    (<Link target={'_blank'} href={publisherDetails?.address ? '/publisher/' + publisherDetails?.address : 'https://ping.pub/beezee/account/' + publisher}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 14)}</Link>)
+                    (<Link target={'_blank'} href={publisherDetails?.address ? '/publisher/' + publisherDetails?.address : explorerBaseUrl + '/account/' + publisher}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 14)}</Link>)
                   }
                 </Text>
               </Box>
