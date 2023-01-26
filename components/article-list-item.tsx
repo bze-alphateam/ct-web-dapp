@@ -22,7 +22,6 @@ import { explorerBaseUrl } from '../config';
 import { getPublisherData } from './services';
 
 export const ArticleListItem = ({id, title, url, picture, publisher, paid, createdAt }: Article) => {
-  
   const [isLoading, setLoading] = useState(true)
   const [publisherDetails, setPublisherDetails] = useState<Publisher|null>(null)
   const [localRespectBadgeParams, setLocalRespectBadgeParams] = useState<{text: string, color: string}|null>(null)
@@ -101,7 +100,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
                         minute: '2-digit',
                         hour12: false,
                       }
-                    ).format(Long.fromValue(createdAt).mul(1000).toInt())
+                    ).format(Long.fromValue(createdAt).toInt() * 1000)
                   }
                   {' '}&bull;{' '}
                   {isLoading ?

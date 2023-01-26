@@ -12,7 +12,7 @@ import Navbar from '../components/navbar';
 import NextHead from '../components/next-head';
 import Footer from '../components/footer';
 import { InfoGrid } from '../components/info-grid';
-import { bze, Helpers } from '@bze/bzejs';
+import { bze } from '@bze/bzejs';
 import { QueryAllArticlesResponse } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
 import { paginationDefaultParams } from '../components/services';
