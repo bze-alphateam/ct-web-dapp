@@ -4,7 +4,8 @@ import {
   Divider,
   Grid,
   Container,
-  useColorMode,
+  Flex,
+  Spinner
 } from '@chakra-ui/react';
 import { PageTitleProps, PublisherListItem, TitleBox } from '../components';
 import { infoGrid, publishers } from '../config';
@@ -12,6 +13,10 @@ import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { InfoGrid } from '../components/info-grid';
+import { bze, Helpers } from '@bze/bzejs';
+import { QueryPublisherResponse } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
+import Long from 'long';
+import { useEffect, useState } from 'react';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Publishers',
@@ -20,6 +25,33 @@ const pageTitleBox: PageTitleProps = {
 }
 
 export default function Publishers() {
+  const rpcEndpoint = 'https://testnet-rpc.getbze.com/';
+  const createDefaultParams = (): Helpers.PageRequest => {
+    return {
+      key: new Uint8Array(),
+      offset: Long.fromNumber(0),
+      limit: Long.fromNumber(200),
+      countTotal: false,
+      reverse: true
+    }
+  }
+  
+  const [isLoading, setLoading] = useState(true)
+  const [publishersListResponse, setPublishersListResponse] = useState<QueryPublisherResponse|null>(null)
+  
+  useEffect(() => {
+    bze.ClientFactory.createRPCQueryClient({rpcEndpoint})
+    .then((client) => {
+      client.bze.cointrunk.v1.publisher({pagination: createDefaultParams()})
+      .then((res) => {
+        console.log('res', res)
+        setPublishersListResponse(res)
+        setLoading(false)
+      })
+    })
+  }, [])
+
+
   return (
     <Container maxW="7xl" py={5}>
       <NextHead></NextHead>
@@ -34,9 +66,15 @@ export default function Publishers() {
         mb={14}
         mt={20}
       >
-        {publishers.map((publisher) => (
-          <PublisherListItem key={publisher.address} {...publisher}></PublisherListItem>
-        ))}
+{
+          isLoading ?
+          (<Flex justifyContent={'center'}><Spinner size='xl' /></Flex>) : 
+          (
+            publishersListResponse?.publisher.map((publisher) => (
+              <PublisherListItem key={publisher.address} {...publisher}></PublisherListItem>
+            ))
+          )
+        }
       </Grid>
       <InfoGrid key='info-pub' info={infoGrid}></InfoGrid>
       <Box mb={3}>

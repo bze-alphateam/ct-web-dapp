@@ -16,8 +16,10 @@ import { stringTruncateFromCenter } from './react';
 import { Article } from '@bze/bzejs/types/codegen/beezee/cointrunk/article';
 import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { useState, useEffect } from 'react';
-import { bze } from '@bze/bzejs';
+import { bze, cosmos } from '@bze/bzejs';
 import { LocallyCachedPublisher } from './types';
+import { respectBadgeParams } from './publisher-badges';
+import Long from "long";
 
 const rpcEndpoint = 'https://testnet-rpc.getbze.com/';
 
@@ -27,7 +29,6 @@ const getPublisherData = async (publisher: string): Promise<Publisher|undefined>
   if (null !== localData) {
     let cachedPublisher = LocallyCachedPublisher.fromString(localData);
     if (!cachedPublisher?.isExpired()) {
-      
       return new Promise<Publisher|undefined> ((resolve) => {
         resolve(cachedPublisher?.getPublisher());
       });
@@ -51,15 +52,18 @@ const getPublisherData = async (publisher: string): Promise<Publisher|undefined>
 export const ArticleListItem = ({id, title, url, picture, publisher, paid, createdAt }: Article) => {
   
   const [isLoading, setLoading] = useState(true)
-  const [publisherDetails, setPublisherDetails] = useState<Publisher | null>(null)
+  const [publisherDetails, setPublisherDetails] = useState<Publisher|null>(null)
+  const [localRespectBadgeParams, setLocalRespectBadgeParams] = useState<{text: string, color: string}|null>(null)
   useEffect(() => {
+    cosmos.bank.v1beta1.Balance
     if (paid) {
-      setLoading(false)
+      setLoading(false);
     } else {
       getPublisherData(publisher)
         .then((publisher) => {
-            setPublisherDetails(publisher ?? null)
-            setLoading(false)
+            setPublisherDetails(publisher ?? null);
+            setLocalRespectBadgeParams(publisher ? respectBadgeParams({respect: publisher.respect}): null);
+            setLoading(false);
           }
         )
     }
@@ -102,7 +106,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
             <Flex p={2} wrap={'wrap'} m={1}>
               <Badge px='2' m={{base: 1}} colorScheme='yellow'>just published</Badge>
               <Badge px='2' m={{base: 1}} colorScheme='orange'>medium.com content</Badge>
-              <Badge px='2' m={{base: 1}} colorScheme='teal'>highly trusted publisher</Badge>
+              {localRespectBadgeParams && (<Badge px='2' m={{base: 1}} colorScheme={localRespectBadgeParams.color}>{localRespectBadgeParams.text}</Badge>)}
               {
                 paid ? (
                 <Badge borderRadius='full' px='2' m={{base: 1}} colorScheme='red'>
@@ -126,12 +130,12 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
                         minute: '2-digit',
                         hour12: false,
                       }
-                    ).format(createdAt.toInt())
+                    ).format(Long.fromValue(createdAt).toInt() * 1000)
                   }
                   {' '}&bull;{' '}
                   {isLoading ?
                     (<Spinner as='span' size='sm'/>) :
-                    (<Link href={'#'}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 24)}</Link>)
+                    (<Link href={'#'}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 14)}</Link>)
                   }
                 </Text>
               </Box>

@@ -1,18 +1,31 @@
 import { Badge } from "@chakra-ui/react"
+import Long from "long";
 
-export const PublisherRespectBadge = ({respect}: {respect: string}): JSX.Element => {
-    const intRespect = parseInt(respect)
-    if (intRespect < 10000000000) {
-        return (<></>)
+export function respectBadgeParams({respect}: {respect: Long}): {text: string, color: string}|null {
+    respect = Long.fromValue(respect);
+    if (respect.lt(10000000000)) {
+        return null;
     }
     let badgeColor = 'yellow'
     let badgeText = 'respected'
-    if (intRespect > 100000000000) {
+    if (respect.gte(100000000000)) {
         badgeColor = 'teal'
         badgeText = 'highly respected'
     }
 
-    return (<Badge variant='solid' ml={1} colorScheme={badgeColor}>{badgeText}</Badge>)
+    return {
+        text: badgeText,
+        color: badgeColor,
+    }
+}
+
+export const PublisherRespectBadge = ({respect}: {respect: Long}): JSX.Element => {
+    const params = respectBadgeParams({respect: respect});
+    if (!params) {
+        return (<></>)
+    }
+
+    return (<Badge variant='solid' ml={1} colorScheme={params.color}>{params.text}</Badge>)
 }
 
  export const PublisherArticlesCountBadge = ({articlesCount}: {articlesCount: number}): JSX.Element => {

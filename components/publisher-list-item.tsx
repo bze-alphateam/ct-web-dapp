@@ -12,13 +12,14 @@ import {
   StatLabel,
   StatNumber,
 } from '@chakra-ui/react';
-import { PublisherProps } from './types';
 import { PublisherArticlesCountBadge, PublisherRespectBadge } from './publisher-badges';
 import { ConnectedShowAddress } from './react'
 import { StarIcon, EditIcon, CalendarIcon } from '@chakra-ui/icons';
+import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
+import Long from 'long';
 
-export const PublisherListItem = ({name, address, active, articles_count, created_at, respect }: PublisherProps) => {
-  
+export const PublisherListItem = ({name, address, active, articlesCount, createdAt, respect }: Publisher) => {
+
   return (
       <Stack
         h="full"
@@ -64,35 +65,37 @@ export const PublisherListItem = ({name, address, active, articles_count, create
               <Box p={4}>
                 <Stat>
                   <StatLabel>Since <CalendarIcon mb={1}/></StatLabel>
-                  <StatNumber>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short',day: '2-digit',}).format(parseInt(created_at) * 1000) }</StatNumber>
+                  <StatNumber>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short',day: '2-digit',}).format(Long.fromValue(createdAt).toInt() * 1000) }</StatNumber>
                 </Stat>
               </Box>
               <Spacer />
               <Box p='4' >
                 <Stat>
                     <StatLabel>Articles <EditIcon mb={1}/></StatLabel>
-                    <StatNumber>{articles_count}</StatNumber>
+                    <StatNumber>{articlesCount}</StatNumber>
                 </Stat>
               </Box>
               <Spacer />
               <Box p='4'>
                 <Stat>
                   <StatLabel>Respect <StarIcon mb={1}/></StatLabel>
-                  <StatNumber>{Intl.NumberFormat('en', { notation: 'compact' }).format(parseInt(respect) / 1000000)}</StatNumber>
+                  <StatNumber>{Intl.NumberFormat('en', { notation: 'compact' }).format(Long.fromValue(respect).toInt() / 1000000)}</StatNumber>
                 </Stat>
               </Box>
             </Flex>
             <Flex p={1}>
               <Box p={4}>
                 <PublisherRespectBadge respect={respect}/>
-                <PublisherArticlesCountBadge articlesCount={articles_count}/>
+                <PublisherArticlesCountBadge articlesCount={articlesCount}/>
               </Box>
               <Spacer />
-              <Box p='4'>
-              <Button rightIcon={<StarIcon />} colorScheme='grey' variant='outline' size='xs'>
-                Pay Respect
-              </Button>
-              </Box>
+              {active && 
+                <Box p='4'>
+                  <Button rightIcon={<StarIcon />} colorScheme='grey' variant='outline' size='xs'>
+                    Pay Respect
+                  </Button>
+                </Box>
+              }
             </Flex>
           </Flex>
       </Stack>
