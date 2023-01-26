@@ -8,7 +8,7 @@ import {
     Spinner,
   } from '@chakra-ui/react';
 import { PageTitleProps, PublisherListItem, TitleBox } from '../../components';
-import { infoGrid } from '../../config';
+import { infoGrid, rpcUrl } from '../../config';
 import NextHead from '../../components/next-head';
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
@@ -33,13 +33,12 @@ export async function getServerSideProps(ctx: any) {
   }
   
 export default function PublisherPage({address}: {address: string}) {
-    const rpcEndpoint = 'https://testnet-rpc.getbze.com/';
     const [isLoading, setLoading] = useState(true)
     const [publisherDetails, setPublisherDetails] = useState<Publisher|null>(null)
     
     useEffect(() => {
         if (typeof address === 'string') {
-            bze.ClientFactory.createRPCQueryClient({rpcEndpoint})
+            bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl})
             .then((client) => {
                 client.bze.cointrunk.v1.publisherByIndex({index: address})
                 .then((res) => {
