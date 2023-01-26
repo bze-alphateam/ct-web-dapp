@@ -134,7 +134,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
                   {' '}&bull;{' '}
                   {isLoading ?
                     (<Spinner as='span' size='sm'/>) :
-                    (<Link href={'#'}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 14)}</Link>)
+                    (<Link target={'_blank'} href={publisherDetails?.address ? '/publisher/' + publisherDetails?.address : 'https://ping.pub/beezee/account/' + publisher}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 14)}</Link>)
                   }
                 </Text>
               </Box>
