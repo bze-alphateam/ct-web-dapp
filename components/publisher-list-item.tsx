@@ -79,7 +79,7 @@ export const PublisherListItem = ({name, address, active, articlesCount, created
               <Box p='4'>
                 <Stat>
                   <StatLabel>Respect <StarIcon mb={1}/></StatLabel>
-                  <StatNumber>{Intl.NumberFormat('en', { notation: 'compact' }).format(Long.fromValue(respect).toInt() / 1000000)}</StatNumber>
+                  <StatNumber>{Intl.NumberFormat('en', { notation: 'compact' }).format(Long.fromValue(respect).div(1000000).toInt())}</StatNumber>
                 </Stat>
               </Box>
             </Flex>

@@ -8,7 +8,7 @@ import {
   Spinner
 } from '@chakra-ui/react';
 import { PageTitleProps, PublisherListItem, TitleBox } from '../components';
-import { infoGrid, publishers } from '../config';
+import { infoGrid } from '../config';
 import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
@@ -44,7 +44,6 @@ export default function Publishers() {
     .then((client) => {
       client.bze.cointrunk.v1.publisher({pagination: createDefaultParams()})
       .then((res) => {
-        console.log('res', res)
         setPublishersListResponse(res)
         setLoading(false)
       })
@@ -66,7 +65,7 @@ export default function Publishers() {
         mb={14}
         mt={20}
       >
-{
+        {
           isLoading ?
           (<Flex justifyContent={'center'}><Spinner size='xl' /></Flex>) : 
           (
