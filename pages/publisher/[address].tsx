@@ -7,18 +7,15 @@ import {
     Flex,
     Spinner,
   } from '@chakra-ui/react';
-import { PageTitleProps, PublisherListItem, PublisherProps, stringTruncateFromCenter, TitleBox } from '../../components';
-import { infoGrid, publishers } from '../../config';
+import { PageTitleProps, PublisherListItem, TitleBox } from '../../components';
+import { infoGrid } from '../../config';
 import NextHead from '../../components/next-head';
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import { InfoGrid } from '../../components/info-grid';
-import { bze, Helpers } from '@bze/bzejs';
-import { QueryPublisherByIndexResponse } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
-import Long from 'long';
+import { bze } from '@bze/bzejs';
 import { useEffect, useState } from 'react';
 import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
-import { useRouter } from 'next/router'
 
 const pageTitleBox: PageTitleProps = {
     title: 'CoinTrunk Publisher',

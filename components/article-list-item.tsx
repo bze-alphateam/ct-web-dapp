@@ -16,7 +16,7 @@ import { stringTruncateFromCenter } from './react';
 import { Article } from '@bze/bzejs/types/codegen/beezee/cointrunk/article';
 import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { useState, useEffect } from 'react';
-import { bze, cosmos } from '@bze/bzejs';
+import { bze } from '@bze/bzejs';
 import { LocallyCachedPublisher } from './types';
 import { respectBadgeParams } from './publisher-badges';
 import Long from "long";
@@ -55,7 +55,6 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
   const [publisherDetails, setPublisherDetails] = useState<Publisher|null>(null)
   const [localRespectBadgeParams, setLocalRespectBadgeParams] = useState<{text: string, color: string}|null>(null)
   useEffect(() => {
-    cosmos.bank.v1beta1.Balance
     if (paid) {
       setLoading(false);
     } else {
