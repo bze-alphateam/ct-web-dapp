@@ -8,14 +8,14 @@ import {
     Spinner,
   } from '@chakra-ui/react';
 import { PageTitleProps, PublisherListItem, TitleBox } from '../../components';
-import { infoGrid, rpcUrl } from '../../config';
+import { infoGrid } from '../../config';
 import NextHead from '../../components/next-head';
 import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import { InfoGrid } from '../../components/info-grid';
-import { bze } from '@bze/bzejs';
 import { useEffect, useState } from 'react';
 import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
+import { getPublisherData } from '../../components/services';
 
 const pageTitleBox: PageTitleProps = {
     title: 'CoinTrunk Publisher',
@@ -38,19 +38,16 @@ export default function PublisherPage({address}: {address: string}) {
     
     useEffect(() => {
         if (typeof address === 'string') {
-            bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl})
-            .then((client) => {
-                client.bze.cointrunk.v1.publisherByIndex({index: address})
-                .then((res) => {
-                    setPublisherDetails(res.publisher ?? null)
+            getPublisherData(address)
+                .then((publisher) => {
+                    setPublisherDetails(publisher ?? null)
                     setLoading(false)
-                    pageTitleBox.subTitleHighlighted = res.publisher?.name ?? ''
+                    pageTitleBox.subTitleHighlighted = publisher?.name ?? ''
                 })
                 .catch((err) => {
                     console.log(err)
                     setLoading(false)
                 })
-            })
         }
     }, [])
     

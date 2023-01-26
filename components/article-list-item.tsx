@@ -16,37 +16,10 @@ import { stringTruncateFromCenter } from './react';
 import { Article } from '@bze/bzejs/types/codegen/beezee/cointrunk/article';
 import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { useState, useEffect } from 'react';
-import { bze } from '@bze/bzejs';
-import { LocallyCachedPublisher } from './types';
 import { respectBadgeParams } from './publisher-badges';
 import Long from "long";
-import { rpcUrl, explorerBaseUrl } from '../config';
-
-const getPublisherData = async (publisher: string): Promise<Publisher|undefined> => {
-  let localStorageKey = 'publisher:' + publisher;
-  let localData = localStorage.getItem(localStorageKey);
-  if (null !== localData) {
-    let cachedPublisher = LocallyCachedPublisher.fromString(localData);
-    if (!cachedPublisher?.isExpired()) {
-      return new Promise<Publisher|undefined> ((resolve) => {
-        resolve(cachedPublisher?.getPublisher());
-      });
-    }
-    
-    localStorage.removeItem(localStorageKey);
-  }
-  
-  const client = await bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl});
-  const publisherResponse = await client.bze.cointrunk.v1.publisherByIndex({index: publisher});
-  if (publisherResponse.publisher) {
-    let cachePublisher = LocallyCachedPublisher.fromPublisher(publisherResponse.publisher);
-    localStorage.setItem(localStorageKey, JSON.stringify(cachePublisher.toJSON()));
-  }
-  
-  return new Promise<Publisher|undefined>((resolve) => {
-    resolve(publisherResponse?.publisher);
-  });
-}
+import { explorerBaseUrl } from '../config';
+import { getPublisherData } from './services';
 
 export const ArticleListItem = ({id, title, url, picture, publisher, paid, createdAt }: Article) => {
   
@@ -60,7 +33,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
       getPublisherData(publisher)
         .then((publisher) => {
             setPublisherDetails(publisher ?? null);
-            setLocalRespectBadgeParams(publisher ? respectBadgeParams({respect: publisher.respect}): null);
+            setLocalRespectBadgeParams(publisher ? respectBadgeParams({respect: publisher.respect}) : null);
             setLoading(false);
           }
         )
