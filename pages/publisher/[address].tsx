@@ -47,6 +47,10 @@ export default function PublisherPage({address}: {address: string}) {
                     setLoading(false)
                     pageTitleBox.subTitleHighlighted = res.publisher?.name ?? ''
                 })
+                .catch((err) => {
+                    console.log(err)
+                    setLoading(false)
+                })
             })
         }
     }, [])
@@ -66,9 +70,11 @@ export default function PublisherPage({address}: {address: string}) {
             mt={20}
         >
             {
-                isLoading || publisherDetails === null ?
-                (<Flex justifyContent={'center'}><Spinner size='xl' /></Flex>) : 
-                (<PublisherListItem key={publisherDetails.address} {...publisherDetails}></PublisherListItem>)
+                isLoading ?
+                    (<Flex justifyContent={'center'}><Spinner size='xl' /></Flex>) : 
+                publisherDetails !== null ?
+                    (<PublisherListItem key={publisherDetails.address} {...publisherDetails}></PublisherListItem>) :
+                    (<Flex justifyContent={'center'} fontSize={26}>Publisher with address: {address} not found!</Flex>)
             }
         </Grid>
         <InfoGrid key='info-pub' info={infoGrid}></InfoGrid>
