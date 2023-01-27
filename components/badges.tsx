@@ -49,3 +49,8 @@ export const PublisherRespectBadge = ({respect}: {respect: Long}): JSX.Element =
 
     return (<Badge variant='solid' ml={1} colorScheme={badgeColor}>{badgeText}</Badge>)
 }
+
+export const ArticleContentBadge = ({url}: {url: string}): JSX.Element => {
+    const { hostname } = new URL(url);
+    return (<Badge px='2' m={{base: 1}} colorScheme='orange'>{hostname} content</Badge>)
+}

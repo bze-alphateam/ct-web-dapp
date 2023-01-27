@@ -6,4 +6,4 @@ export * from './next-head';
 export * from './article-list-item';
 export * from './publisher-list-item';
 export * from './title-box';
-export * from './publisher-badges';
+export * from './badges';

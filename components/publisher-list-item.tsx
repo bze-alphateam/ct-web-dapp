@@ -12,7 +12,7 @@ import {
   StatLabel,
   StatNumber,
 } from '@chakra-ui/react';
-import { PublisherArticlesCountBadge, PublisherRespectBadge } from './publisher-badges';
+import { PublisherArticlesCountBadge, PublisherRespectBadge } from './badges';
 import { ConnectedShowAddress } from './react'
 import { StarIcon, EditIcon, CalendarIcon } from '@chakra-ui/icons';
 import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
