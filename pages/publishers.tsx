@@ -16,7 +16,7 @@ import { InfoGrid } from '../components/info-grid';
 import { bze } from '@bze/bzejs';
 import { QueryPublisherResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
-import { paginationDefaultParams } from '../components/services';
+import { getAllPublishers, paginationDefaultParams } from '../components/services';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Publishers',
@@ -29,13 +29,10 @@ export default function Publishers() {
   const [publishersListResponse, setPublishersListResponse] = useState<QueryPublisherResponseSDKType|null>(null)
   
   useEffect(() => {
-    bze.ClientFactory.createLCDClient({restEndpoint: restUrl})
-    .then((client) => {
-      client.bze.cointrunk.v1.publisher({pagination: paginationDefaultParams()})
-      .then((res) => {
-        setPublishersListResponse(res)
-        setLoading(false)
-      })
+    getAllPublishers()
+    .then((res) => {
+      setPublishersListResponse(typeof res === 'undefined' ? null : res);
+      setLoading(false);
     })
   }, [])
 

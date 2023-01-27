@@ -15,7 +15,7 @@ import { InfoGrid } from '../components/info-grid';
 import { bze } from '@bze/bzejs';
 import { QueryAllArticlesResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
-import { paginationDefaultParams } from '../components/services';
+import { paginationDefaultParams, getAllArticles } from '../components/services';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Articles',
@@ -28,13 +28,10 @@ export default function Home() {
   const [articlesListResponse, setArticlesListResponse] = useState<QueryAllArticlesResponseSDKType|null>(null)
 
   useEffect(() => {
-    bze.ClientFactory.createLCDClient({restEndpoint: restUrl})
-    .then((client) => {
-      client.bze.cointrunk.v1.allArticles({pagination: paginationDefaultParams()})
-      .then((res) => {
-        setArticlesListResponse(res)
-        setLoading(false)
-      })
+    getAllArticles()
+    .then((res) => {
+      setArticlesListResponse(typeof res === 'undefined' ? null : res)
+      setLoading(false)
     })
   }, [])
 
