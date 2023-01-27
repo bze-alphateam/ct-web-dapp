@@ -1,4 +1,3 @@
-
 import {
   Box,
   Divider,
@@ -8,15 +7,14 @@ import {
   Spinner
 } from '@chakra-ui/react';
 import { PageTitleProps, PublisherListItem, TitleBox } from '../components';
-import { infoGrid, restUrl } from '../config';
+import { infoGrid } from '../config';
 import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { InfoGrid } from '../components/info-grid';
-import { bze } from '@bze/bzejs';
 import { QueryPublisherResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
-import { getAllPublishers, paginationDefaultParams } from '../components/services';
+import { getAllPublishers } from '../components/services';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Publishers',

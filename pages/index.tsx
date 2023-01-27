@@ -7,15 +7,14 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { ArticleListItem, TitleBox, PageTitleProps } from '../components';
-import { infoGrid, restUrl } from '../config';
+import { infoGrid } from '../config';
 import Navbar from '../components/navbar';
 import NextHead from '../components/next-head';
 import Footer from '../components/footer';
 import { InfoGrid } from '../components/info-grid';
-import { bze } from '@bze/bzejs';
 import { QueryAllArticlesResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
-import { paginationDefaultParams, getAllArticles } from '../components/services';
+import { getAllArticles } from '../components/services';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Articles',
