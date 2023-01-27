@@ -1,5 +1,4 @@
 
-// import { Helpers } from '@bze/bzejs';
 import { PageRequest } from '@bze/bzejs/types/codegen/cosmos/base/query/v1beta1/pagination';
 import Long from 'long';
 

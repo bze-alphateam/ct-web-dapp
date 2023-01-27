@@ -18,7 +18,7 @@ import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publ
 import { useState, useEffect } from 'react';
 import { respectBadgeParams } from './publisher-badges';
 import Long from "long";
-import { explorerBaseUrl } from '../config';
+import { getExplorerBaseUrl } from '../config';
 import { getPublisherData } from './services';
 
 export const ArticleListItem = ({id, title, url, picture, publisher, paid, created_at }: ArticleSDKType) => {
@@ -105,7 +105,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
                   {' '}&bull;{' '}
                   {isLoading ?
                     (<Spinner as='span' size='sm'/>) :
-                    (<Link target={'_blank'} href={publisherDetails?.address ? '/publisher/' + publisherDetails?.address : explorerBaseUrl + '/account/' + publisher}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 14)}</Link>)
+                    (<Link target={'_blank'} href={publisherDetails?.address ? '/publisher/' + publisherDetails?.address : getExplorerBaseUrl() + '/account/' + publisher}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 14)}</Link>)
                   }
                 </Text>
               </Box>

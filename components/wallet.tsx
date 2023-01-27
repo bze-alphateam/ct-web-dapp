@@ -3,7 +3,7 @@ import {
   GridItem,
   Icon,
 } from '@chakra-ui/react';
-import { MouseEventHandler, useEffect, useMemo } from 'react';
+import { MouseEventHandler, useEffect } from 'react';
 import { FiAlertTriangle } from 'react-icons/fi';
 import {
   Error,
@@ -19,7 +19,7 @@ import {
   RejectedWarn,
   WalletConnectComponent,
 } from '../components';
-import { chainName } from '../config';
+import { getChainName } from '../config';
 
 export const WalletSection = () => {
   const walletManager = useWallet();
@@ -38,7 +38,7 @@ export const WalletSection = () => {
   } = walletManager;
 
   useEffect(() => {
-    setCurrentChain(chainName);
+    setCurrentChain(getChainName());
   }, [setCurrentChain]);
 
   const chain = {

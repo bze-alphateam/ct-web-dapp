@@ -49,7 +49,7 @@ export default function PublisherPage({address}: {address: string}) {
                     setLoading(false)
                 })
         }
-    }, [])
+    })
     
     return (
         <Container maxW="7xl" py={5}>

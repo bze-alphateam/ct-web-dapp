@@ -7,7 +7,7 @@ import { wallets as keplrWallets } from '@cosmos-kit/keplr';
 // import { wallets as leapWallets } from '@cosmos-kit/leap';
 
 import { SignerOptions } from '@cosmos-kit/core';
-import { chains, assets } from 'chain-registry';
+import { getAssets, getChain } from '../config';
 
 function CreateCosmosApp({ Component, pageProps }: AppProps) {
   const signerOptions: SignerOptions = {
@@ -19,8 +19,8 @@ function CreateCosmosApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={defaultTheme}>
       <WalletProvider
-        chains={chains}
-        assetLists={assets}
+        chains={getChain()}
+        assetLists={getAssets()}
         wallets={[...keplrWallets]}
         signerOptions={signerOptions}
       >

@@ -1,7 +1,7 @@
 
 import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { bze } from '@bze/bzejs';
-import { restUrl } from '../../config';
+import { getRestUrl } from '../../config';
 import { LocallyCachedPublisher } from '../types';
 import { QueryPublisherResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { paginationDefaultParams } from './paginationService';
@@ -22,7 +22,7 @@ export const getPublisherData = async (publisher: string): Promise<PublisherSDKT
       localStorage.removeItem(localStorageKey);
     }
     
-    const client = await bze.ClientFactory.createLCDClient({restEndpoint: restUrl});
+    const client = await bze.ClientFactory.createLCDClient({restEndpoint: getRestUrl()});
     const publisherResponse = await client.bze.cointrunk.v1.publisherByIndex({index: publisher});
     
     if (publisherResponse.publisher) {
@@ -36,7 +36,7 @@ export const getPublisherData = async (publisher: string): Promise<PublisherSDKT
   }
 
 export const getAllPublishers = async (): Promise<QueryPublisherResponseSDKType|undefined> => {
-  let client = await bze.ClientFactory.createLCDClient({restEndpoint: restUrl})
+  let client = await bze.ClientFactory.createLCDClient({restEndpoint: getRestUrl()})
 
   return new Promise<QueryPublisherResponseSDKType|undefined>((resolve) => {
         resolve(client.bze.cointrunk.v1.publisher({pagination: paginationDefaultParams()}));
