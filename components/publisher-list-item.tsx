@@ -15,10 +15,10 @@ import {
 import { PublisherArticlesCountBadge, PublisherRespectBadge } from './publisher-badges';
 import { ConnectedShowAddress } from './react'
 import { StarIcon, EditIcon, CalendarIcon } from '@chakra-ui/icons';
-import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
+import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import Long from 'long';
 
-export const PublisherListItem = ({name, address, active, articlesCount, createdAt, respect }: Publisher) => {
+export const PublisherListItem = ({name, address, active, articles_count, created_at, respect }: PublisherSDKType) => {
 
   return (
       <Stack
@@ -65,14 +65,14 @@ export const PublisherListItem = ({name, address, active, articlesCount, created
               <Box p={4}>
                 <Stat>
                   <StatLabel>Since <CalendarIcon mb={1}/></StatLabel>
-                  <StatNumber>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short',day: '2-digit',}).format(Long.fromValue(createdAt).toInt() * 1000) }</StatNumber>
+                  <StatNumber>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short',day: '2-digit',}).format(Long.fromValue(created_at).toInt() * 1000) }</StatNumber>
                 </Stat>
               </Box>
               <Spacer />
               <Box p='4' >
                 <Stat>
                     <StatLabel>Articles <EditIcon mb={1}/></StatLabel>
-                    <StatNumber>{articlesCount}</StatNumber>
+                    <StatNumber>{articles_count}</StatNumber>
                 </Stat>
               </Box>
               <Spacer />
@@ -86,7 +86,7 @@ export const PublisherListItem = ({name, address, active, articlesCount, created
             <Flex p={1}>
               <Box p={4}>
                 <PublisherRespectBadge respect={respect}/>
-                <PublisherArticlesCountBadge articlesCount={articlesCount}/>
+                <PublisherArticlesCountBadge articlesCount={articles_count}/>
               </Box>
               <Spacer />
               {active && 

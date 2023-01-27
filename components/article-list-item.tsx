@@ -13,17 +13,17 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { stringTruncateFromCenter } from './react';
-import { Article } from '@bze/bzejs/types/codegen/beezee/cointrunk/article';
-import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
+import { ArticleSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/article';
+import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { useState, useEffect } from 'react';
 import { respectBadgeParams } from './publisher-badges';
 import Long from "long";
 import { explorerBaseUrl } from '../config';
 import { getPublisherData } from './services';
 
-export const ArticleListItem = ({id, title, url, picture, publisher, paid, createdAt }: Article) => {
+export const ArticleListItem = ({id, title, url, picture, publisher, paid, created_at }: ArticleSDKType) => {
   const [isLoading, setLoading] = useState(true)
-  const [publisherDetails, setPublisherDetails] = useState<Publisher|null>(null)
+  const [publisherDetails, setPublisherDetails] = useState<PublisherSDKType|null>(null)
   const [localRespectBadgeParams, setLocalRespectBadgeParams] = useState<{text: string, color: string}|null>(null)
   useEffect(() => {
     if (paid) {
@@ -70,7 +70,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
           <Flex padding={2} justifyContent={'center'} direction={{base: 'column'}} flex={'100%'}>
             <Flex p={2}>
               <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
-                <Heading fontSize={{base: '18px', md: '22px'}}> #{id.toInt()}.{' '}{title}{' '}<ExternalLinkIcon mx='1px'/></Heading>
+                <Heading fontSize={{base: '18px', md: '22px'}}> #{Long.fromValue(id).toInt()}.{' '}{title}{' '}<ExternalLinkIcon mx='1px'/></Heading>
               </Link>
             </Flex>
             <Flex p={2} wrap={'wrap'} m={1}>
@@ -100,7 +100,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
                         minute: '2-digit',
                         hour12: false,
                       }
-                    ).format(Long.fromValue(createdAt).toInt() * 1000)
+                    ).format(Long.fromValue(created_at).toInt() * 1000)
                   }
                   {' '}&bull;{' '}
                   {isLoading ?

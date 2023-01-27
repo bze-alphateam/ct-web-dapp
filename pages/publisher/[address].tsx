@@ -14,7 +14,7 @@ import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import { InfoGrid } from '../../components/info-grid';
 import { useEffect, useState } from 'react';
-import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
+import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { getPublisherData } from '../../components/services';
 
 const pageTitleBox: PageTitleProps = {
@@ -34,7 +34,7 @@ export async function getServerSideProps(ctx: any) {
   
 export default function PublisherPage({address}: {address: string}) {
     const [isLoading, setLoading] = useState(true)
-    const [publisherDetails, setPublisherDetails] = useState<Publisher|null>(null)
+    const [publisherDetails, setPublisherDetails] = useState<PublisherSDKType|null>(null)
     
     useEffect(() => {
         if (typeof address === 'string') {

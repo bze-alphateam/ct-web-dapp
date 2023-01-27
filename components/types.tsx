@@ -1,4 +1,4 @@
-import { Publisher } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
+import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { MouseEventHandler, ReactNode } from 'react';
 import { IconType } from 'react-icons';
 
@@ -93,10 +93,10 @@ export type InfoList = {
 
 export class LocallyCachedPublisher {
   private readonly expirationTime: number = 1000 * 60 * 60 * 24; //24 hours
-  private publisher: Publisher;
+  private publisher: PublisherSDKType;
   private expiresAt: number;
   
-  public constructor(publisher: Publisher, expiresAt: number|null) {
+  public constructor(publisher: PublisherSDKType, expiresAt: number|null) {
     this.publisher = publisher;
     if (null === expiresAt) {
       expiresAt = new Date().getTime() + this.expirationTime;
@@ -104,7 +104,7 @@ export class LocallyCachedPublisher {
     this.expiresAt = expiresAt;
   }
 
-  public getPublisher(): Publisher {
+  public getPublisher(): PublisherSDKType {
     return this.publisher;
   }
 
@@ -136,7 +136,7 @@ export class LocallyCachedPublisher {
     return new LocallyCachedPublisher({...object.publisher}, object.expiresAt);
   }
 
-  static fromPublisher(publisher: Publisher): LocallyCachedPublisher {
+  static fromPublisher(publisher: PublisherSDKType): LocallyCachedPublisher {
     return new LocallyCachedPublisher(publisher, null);
   }
 }

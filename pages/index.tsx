@@ -7,13 +7,13 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { ArticleListItem, TitleBox, PageTitleProps } from '../components';
-import { infoGrid, rpcUrl } from '../config';
+import { infoGrid, restUrl } from '../config';
 import Navbar from '../components/navbar';
 import NextHead from '../components/next-head';
 import Footer from '../components/footer';
 import { InfoGrid } from '../components/info-grid';
 import { bze } from '@bze/bzejs';
-import { QueryAllArticlesResponse } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
+import { QueryAllArticlesResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
 import { paginationDefaultParams } from '../components/services';
 
@@ -25,10 +25,10 @@ const pageTitleBox: PageTitleProps = {
 
 export default function Home() {
   const [isLoading, setLoading] = useState(true)
-  const [articlesListResponse, setArticlesListResponse] = useState<QueryAllArticlesResponse|null>(null)
+  const [articlesListResponse, setArticlesListResponse] = useState<QueryAllArticlesResponseSDKType|null>(null)
 
   useEffect(() => {
-    bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl})
+    bze.ClientFactory.createLCDClient({restEndpoint: restUrl})
     .then((client) => {
       client.bze.cointrunk.v1.allArticles({pagination: paginationDefaultParams()})
       .then((res) => {

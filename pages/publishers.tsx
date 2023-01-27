@@ -8,13 +8,13 @@ import {
   Spinner
 } from '@chakra-ui/react';
 import { PageTitleProps, PublisherListItem, TitleBox } from '../components';
-import { infoGrid, rpcUrl } from '../config';
+import { infoGrid, restUrl } from '../config';
 import NextHead from '../components/next-head';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { InfoGrid } from '../components/info-grid';
 import { bze } from '@bze/bzejs';
-import { QueryPublisherResponse } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
+import { QueryPublisherResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
 import { paginationDefaultParams } from '../components/services';
 
@@ -26,10 +26,10 @@ const pageTitleBox: PageTitleProps = {
 
 export default function Publishers() {  
   const [isLoading, setLoading] = useState(true)
-  const [publishersListResponse, setPublishersListResponse] = useState<QueryPublisherResponse|null>(null)
+  const [publishersListResponse, setPublishersListResponse] = useState<QueryPublisherResponseSDKType|null>(null)
   
   useEffect(() => {
-    bze.ClientFactory.createRPCQueryClient({rpcEndpoint: rpcUrl})
+    bze.ClientFactory.createLCDClient({restEndpoint: restUrl})
     .then((client) => {
       client.bze.cointrunk.v1.publisher({pagination: paginationDefaultParams()})
       .then((res) => {
