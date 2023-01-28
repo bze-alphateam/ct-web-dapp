@@ -16,7 +16,7 @@ import { stringTruncateFromCenter } from './react';
 import { ArticleSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/article';
 import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { useState, useEffect } from 'react';
-import { respectBadgeParams, ArticleContentBadge } from './badges';
+import { respectBadgeParams, ArticleContentBadge, ArticleJustPublished } from './badges';
 import Long from "long";
 import { getExplorerBaseUrl } from '../config';
 import { getPublisherData } from './services';
@@ -74,7 +74,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
               </Link>
             </Flex>
             <Flex p={2} wrap={'wrap'} m={1}>
-              <Badge px='2' m={{base: 1}} colorScheme='yellow'>just published</Badge>
+              <ArticleJustPublished createdAt={created_at} />
               <ArticleContentBadge url={url} />
               {localRespectBadgeParams && (<Badge px='2' m={{base: 1}} colorScheme={localRespectBadgeParams.color}>{localRespectBadgeParams.text}</Badge>)}
               {
