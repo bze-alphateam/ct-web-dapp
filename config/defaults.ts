@@ -1,6 +1,6 @@
 import { networks } from "./networks";
 
-const CURRENT_NETWORK = 'mainnet'; //or 'mainnet' todo: move to .env
+const CURRENT_NETWORK = 'testnet'; //or 'mainnet' or 'testnet' todo: move to .env
 
 export const getChainName = (): string => {
     return networks[CURRENT_NETWORK].base.chainName;
