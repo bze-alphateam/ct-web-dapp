@@ -32,23 +32,45 @@ import Long from 'long';
 import { useRef, useState } from 'react';
 import { bze } from '@bze/bzejs';
 import { useWallet } from "@cosmos-kit/react"
-import { getChainName, getExplorerTxUrl, getRpcUrl, getMinDenom } from '../config';
+import { getExplorerTxUrl, getRpcUrl, getMinDenom } from '../config';
 import { getSigningBzeClient } from '@bze/bzejs';
 import { coins } from '@cosmjs/stargate';
 import { Dec, IntPretty } from '@keplr-wallet/unit';
 import { getAccountBalance } from './services';
 import { useToast } from '@chakra-ui/react'
 import Link from 'next/link';
+import { clearPublisherFromLocalStorage, getPublisherData } from './services';
 
 
 export const PublisherListItem = ({name, address, active, articles_count, created_at, respect }: PublisherSDKType) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [submittingForm, setSubmittingForm] = useState(false);
+  const [respectLoading, setRespectLoading] = useState(false);
+  const [loadedRespect, setLoadedRespect] = useState(respect);
   const initialRef = useRef(null);
   const toast = useToast();
   const { offlineSigner, isWalletConnected, connect, address: walletAddress } = useWallet();
   let amount = new Dec(0);
   
+  const refreshRespect = async () => {
+    clearPublisherFromLocalStorage(address);
+    const publisherData = await getPublisherData(address);
+    if (publisherData !== undefined) {
+      setLoadedRespect(publisherData.respect);
+    }
+  }
+
+  const onSubmitRespectSuccess = async () => {
+    setRespectLoading(true)
+    await refreshRespect();
+    setRespectLoading(false)
+    
+    //let it try again in 10 seconds in case previous call returned old value 
+    setTimeout(() => {
+      refreshRespect();
+    }, 10000)
+  }
+
   const onAmountChange = (event: any) => {
     let floatAmt = parseFloat(event.target.value);
     if (isNaN(floatAmt)) {
@@ -115,6 +137,7 @@ export const PublisherListItem = ({name, address, active, articles_count, create
           status: 'success',
           isClosable: true,
         })
+        onSubmitRespectSuccess();
       } catch (e) {
         toast({
           title: 'Error: ' + e,
@@ -212,13 +235,13 @@ export const PublisherListItem = ({name, address, active, articles_count, create
             <Box p='4'>
               <Stat>
                 <StatLabel>Respect <StarIcon mb={1}/></StatLabel>
-                <StatNumber>{Intl.NumberFormat('en', { notation: 'compact' }).format(Long.fromValue(respect).div(1000000).toInt())}</StatNumber>
+                <StatNumber>{respectLoading ? (<Spinner size='xs' />) : Intl.NumberFormat('en', { notation: 'standard' }).format(Long.fromValue(loadedRespect).div(1000000).toInt())}</StatNumber>
               </Stat>
             </Box>
           </Flex>
           <Flex p={1}>
             <Box p={4}>
-              <PublisherRespectBadge respect={respect}/>
+              <PublisherRespectBadge respect={loadedRespect}/>
               <PublisherArticlesCountBadge articlesCount={articles_count}/>
             </Box>
             <Spacer />
