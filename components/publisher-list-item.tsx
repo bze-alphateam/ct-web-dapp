@@ -22,59 +22,109 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Spinner,
 } from '@chakra-ui/react';
 import { PublisherArticlesCountBadge, PublisherRespectBadge } from './badges';
 import { ConnectedShowAddress } from './react'
 import { StarIcon, EditIcon, CalendarIcon } from '@chakra-ui/icons';
 import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import Long from 'long';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { bze } from '@bze/bzejs';
 import { useWallet } from "@cosmos-kit/react"
-import { getChainName, getAssets, getRpcUrl, getMinDenom } from '../config';
+import { getChainName, getExplorerTxUrl, getRpcUrl, getMinDenom } from '../config';
 import { getSigningBzeClient } from '@bze/bzejs';
 import { coins } from '@cosmjs/stargate';
 import { Dec, IntPretty } from '@keplr-wallet/unit';
+import { getAccountBalance } from './services';
+import { useToast } from '@chakra-ui/react'
+import Link from 'next/link';
 
 
 export const PublisherListItem = ({name, address, active, articles_count, created_at, respect }: PublisherSDKType) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [submittingForm, setSubmittingForm] = useState(false);
   const initialRef = useRef(null);
+  const toast = useToast();
   const { offlineSigner, isWalletConnected, connect, address: walletAddress } = useWallet();
-  let amount = new Dec(1);
+  let amount = new Dec(0);
   
   const onAmountChange = (event: any) => {
-    // console.log(event.target.value);
-    amount = new Dec(event.target.value);
-    // console.log(amount.mul(new Dec(1000000)).toString());
+    let floatAmt = parseFloat(event.target.value);
+    if (isNaN(floatAmt)) {
+      floatAmt = 0;
+    }
+    amount = new Dec(floatAmt);
   }
 
   const onPayRespectButtonClick = () => {    
     return async (e: any) => {
       e.preventDefault();
-      
-      const { payPublisherRespect } = bze.cointrunk.v1.MessageComposer.withTypeUrl;
-      const signingClient = await getSigningBzeClient({rpcEndpoint: getRpcUrl(), signer: offlineSigner});
 
-      // console.log(amount);
-      const paidAmount = new IntPretty(amount.mul(new Dec(1000000))).maxDecimals(0).locale(false).toString()
+      if (offlineSigner === undefined || walletAddress === undefined) {
+        return;
+      }
+      setSubmittingForm(true);
+
+      const amountInUbze = amount.mul(new Dec(1000000));
+      const paidAmount = new IntPretty(amountInUbze).maxDecimals(0).locale(false).toString()
+      const balance = await getAccountBalance(walletAddress);
+      if (balance.balance === undefined) {
+        setSubmittingForm(false);
+        toast({
+          title: 'Can not get balance! ',
+          status: 'error',
+          isClosable: true,
+        })
+        onClose();
+        return;
+      }
+
+      if (amountInUbze.gte(new Dec(balance.balance.amount))) {
+        setSubmittingForm(false);
+        toast({
+          title: 'Insufficient funds!',
+          status: 'error',
+          isClosable: true,
+        })
+        console.log('paid amount higher than current balance');
+        onClose();
+        return;
+      }
+
+      const signingClient = await getSigningBzeClient({rpcEndpoint: getRpcUrl(), signer: offlineSigner});
+      const { payPublisherRespect } = bze.cointrunk.v1.MessageComposer.withTypeUrl;
       const payPublisherRespectMsg = payPublisherRespect({
         creator: walletAddress,
         address: address,
         amount: paidAmount + getMinDenom()
       });
 
-      // console.log(payPublisherRespectMsg);
-      const gasEstimated = await signingClient?.simulate(walletAddress, [payPublisherRespectMsg], undefined)
-      const fee = {
-        amount: coins(0, getMinDenom()),
-        gas: new IntPretty(new Dec(gasEstimated).mul(new Dec(1.3)))
-          .maxDecimals(0)
-          .locale(false)
-          .toString()
-      };
-      // console.log(fee);
-      signingClient.signAndBroadcast(walletAddress, [payPublisherRespectMsg], fee)
+      try {
+        const gasEstimated = await signingClient.simulate(walletAddress, [payPublisherRespectMsg], undefined)
+        const fee = {
+          amount: coins(0, getMinDenom()),
+          gas: new IntPretty(new Dec(gasEstimated).mul(new Dec(1.3)))
+            .maxDecimals(0)
+            .locale(false)
+            .toString()
+        };
+        let txResult = await signingClient.signAndBroadcast(walletAddress, [payPublisherRespectMsg], fee)
+        toast({
+          title: (<Link href={getExplorerTxUrl(txResult.transactionHash)} target='_blank'>Respects paid! View TX</Link>),
+          status: 'success',
+          isClosable: true,
+        })
+      } catch (e) {
+        toast({
+          title: 'Error: ' + e,
+          status: 'error',
+          isClosable: true,
+        })
+      }
+      
+      setSubmittingForm(false);
+      onClose();
     }
   }
 
@@ -92,13 +142,13 @@ export const PublisherListItem = ({name, address, active, articles_count, create
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>BZE Amount</FormLabel>
-              <Input name='amount' type={'number'} ref={initialRef} placeholder='Total BZE you pay' onChange={onAmountChange} />
+              <Input disabled={submittingForm} name='amount' type={'number'} ref={initialRef} placeholder='Total BZE you pay' onChange={onAmountChange} />
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onPayRespectButtonClick()}>
-              Pay
+            <Button disabled={submittingForm} colorScheme='blue' mr={3} onClick={onPayRespectButtonClick()}>
+              {submittingForm && (<Spinner size='xs' />)}{' '}Pay
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

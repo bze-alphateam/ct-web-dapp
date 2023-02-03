@@ -35,3 +35,7 @@ export const getMainAsset = (): any => {
 
     return list.assets.find((element: any) => {element.chain_name === getMinDenom()})
 }
+
+export const getExplorerTxUrl = (txHash: string) => {
+    return getExplorerBaseUrl() + '/tx/' + txHash;
+}
