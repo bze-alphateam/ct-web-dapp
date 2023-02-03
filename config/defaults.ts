@@ -6,6 +6,10 @@ export const getChainName = (): string => {
     return networks[CURRENT_NETWORK].base.chainName;
 }
 
+export const getMinDenom = (): string => {
+    return networks[CURRENT_NETWORK].base.minDenom;
+}
+
 export const getExplorerBaseUrl = (): string => {
     return networks[CURRENT_NETWORK].base.explorerBaseUrl;
 }
@@ -24,4 +28,10 @@ export const getChain = (): any => {
 
 export const getAssets = (): any => {
     return networks[CURRENT_NETWORK].assets;
+}
+
+export const getMainAsset = (): any => {
+    const list = getAssets().find((element: any) => {element.chain_name === CURRENT_NETWORK});
+
+    return list.assets.find((element: any) => {element.chain_name === getMinDenom()})
 }

@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@bze/bzejs": "^0.0.6",
+    "@bze/bzejs": "0.0.8",
     "@chakra-ui/icons": "2.0.12",
     "@chakra-ui/react": "2.4.1",
     "@cosmjs/cosmwasm-stargate": "0.29.5",

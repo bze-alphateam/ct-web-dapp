@@ -87,6 +87,7 @@ export const networks = {
         rpcUrl: 'https://testnet-rpc.getbze.com',
         restUrl: 'https://testnet.getbze.com',
         chainName: 'beezee',
+        minDenom: 'ubze'
       },
       chain: chains,
       assets: assets,
@@ -97,6 +98,7 @@ export const networks = {
         rpcUrl: 'https://testnet-rpc.getbze.com',
         restUrl: 'https://testnet.getbze.com',
         chainName: BZE_TESTNET_2_SUGGEST_CHAIN.chain_name,
+        minDenom: TESTNET_COIN_MIN_DENOM
       },
       chain: [BZE_TESTNET_2_SUGGEST_CHAIN],
       assets: [
