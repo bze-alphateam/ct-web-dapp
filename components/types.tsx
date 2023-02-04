@@ -92,7 +92,7 @@ export type InfoList = {
 }
 
 export class LocallyCachedPublisher {
-  private readonly expirationTime: number = 1000 * 60 * 60 * 24; //24 hours
+  private readonly expirationTime: number = 1000 * 60 * 60 * 1; //1 hours
   private publisher: PublisherSDKType;
   private expiresAt: number;
   
