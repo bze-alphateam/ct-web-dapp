@@ -13,7 +13,6 @@ export const getPublisherData = async (publisher: string): Promise<PublisherSDKT
   let localData = localStorage.getItem(localStorageKey);
   if (null !== localData) {
     let cachedPublisher = LocallyCachedPublisher.fromString(localData);
-    
     if (!cachedPublisher?.isExpired()) {
       
       return new Promise<PublisherSDKType|undefined> ((resolve) => {

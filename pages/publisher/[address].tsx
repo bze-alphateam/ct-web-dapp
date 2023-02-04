@@ -35,7 +35,6 @@ export async function getServerSideProps(ctx: any) {
 export default function PublisherPage({address}: {address: string}) {
     const [isLoading, setLoading] = useState(true)
     const [publisherDetails, setPublisherDetails] = useState<PublisherSDKType|null>(null)
-    
     useEffect(() => {
         if (typeof address === 'string') {
             getPublisherData(address)

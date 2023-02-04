@@ -29,7 +29,6 @@ export default function Home() {
   useEffect(() => {
     getAllArticles()
     .then((res) => {
-      console.log(res)
       setArticlesListResponse(typeof res === 'undefined' ? null : res)
       setLoading(false)
     })
