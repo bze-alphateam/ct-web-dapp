@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import {
   Box,
   Flex,
@@ -11,11 +11,22 @@ import {
   useDisclosure,
   Stack,
   useColorMode,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  ModalFooter,
+  FormLabel,
+  Input,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import { JsonObject } from '@cosmjs/cosmwasm-stargate';
 import { WalletSection } from '../components';
+import { ArticleAddModal } from './article-add-modal';
 
 const Links = [
     {
@@ -44,18 +55,25 @@ const NavLink = ({ children, current }: { children: JsonObject, current: string}
 );
 
 export default function Navbar({current}: {current: string}) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isMenuOpen, onOpen: onMenuOpen, onClose: onMenuClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [ showModal, setShowModal ] = useState(false)
+  
+  const onModalClose = () => {
+    setShowModal(false);
+  }
+  
   return (
     <>
+      <ArticleAddModal showModal={showModal} onClose={onModalClose}/>
       <Box px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            icon={isMenuOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
+            onClick={isMenuOpen ? onMenuClose : onMenuOpen}
           />
           <HStack spacing={2} alignItems={'center'}>
             <Box display={{ base: 'none', md: 'flex' }}>
@@ -70,6 +88,9 @@ export default function Navbar({current}: {current: string}) {
               {Links.map((link) => (
                 <NavLink key={link.name} current={current}>{link}</NavLink>
               ))}
+              <Button colorScheme={'orange'} border='2px' variant='outline' onClick={() => {setShowModal(true)}}>
+                  Add Article
+              </Button>
             </HStack>
           </HStack>
           <HStack spacing={2} alignItems={'center'}>
@@ -82,7 +103,7 @@ export default function Navbar({current}: {current: string}) {
             </Button>
           </HStack>
         </Flex>
-        {isOpen ? (
+        {isMenuOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((link) => (

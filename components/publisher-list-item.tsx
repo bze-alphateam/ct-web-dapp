@@ -157,6 +157,7 @@ export const PublisherListItem = ({name, address, active, articles_count, create
         initialFocusRef={initialRef}
         isOpen={isOpen}
         onClose={onClose}
+        isCentered
       >
         <ModalOverlay />
         <ModalContent>
