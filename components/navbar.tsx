@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Flex,
@@ -11,16 +11,6 @@ import {
   useDisclosure,
   Stack,
   useColorMode,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  FormControl,
-  ModalFooter,
-  FormLabel,
-  Input,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
@@ -59,7 +49,7 @@ export default function Navbar({current}: {current: string}) {
   const { isOpen: isMenuOpen, onOpen: onMenuOpen, onClose: onMenuClose } = useDisclosure();
   const { isWalletConnected, connect } = useWallet();
   const { colorMode, toggleColorMode } = useColorMode();
-  const [ showModal, setShowModal ] = useState(false)
+  const [ showModal, setShowModal ] = useState(false);
   
   const onModalClose = () => {
     setShowModal(false);
@@ -104,7 +94,6 @@ export default function Navbar({current}: {current: string}) {
             </HStack>
           </HStack>
           <HStack spacing={2} alignItems={'center'}>
-          
             <WalletSection></WalletSection>
             <Button variant="outline" onClick={toggleColorMode}>
                 <Icon
