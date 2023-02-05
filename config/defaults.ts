@@ -31,8 +31,9 @@ export const getAssets = (): any => {
 }
 
 export const getMainAsset = (): any => {
-    const list = getAssets().find((element: any) => {element.chain_name === CURRENT_NETWORK});
-
+    const list = getAssets().find((element: any) => {element.chain_name === networks[CURRENT_NETWORK].base.chainName});
+    console.log(getAssets());
+    console.log('list', list);
     return list.assets.find((element: any) => {element.chain_name === getMinDenom()})
 }
 
