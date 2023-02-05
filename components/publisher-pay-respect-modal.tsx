@@ -15,14 +15,14 @@ import {
     Alert,
     AlertIcon,
 } from '@chakra-ui/react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { bze } from '@bze/bzejs';
 import { useWallet } from "@cosmos-kit/react"
 import { getExplorerTxUrl, getRpcUrl, getMinDenom } from '../config';
 import { getSigningBzeClient } from '@bze/bzejs';
 import { coins } from '@cosmjs/stargate';
 import { Dec, IntPretty } from '@keplr-wallet/unit';
-import { getAccountBalance } from './services';
+import { getAccountBalance, getCointrunkParams } from './services';
 import { useToast } from '@chakra-ui/react'
 import Link from 'next/link';
 
@@ -31,6 +31,7 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
     const initialRef = useRef(null);
     const [submittingForm, setSubmittingForm] = useState(false);
     const { offlineSigner, address: walletAddress } = useWallet();
+    const [ respectTax, setRespectTax ] = useState(0);
     const toast = useToast();
 
     let amount = new Dec(0);
@@ -113,7 +114,23 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
           setSubmittingForm(false);
           onModalClose();
         }
+    }
+
+    const loadParams = async () => {
+      let params = await getCointrunkParams();
+      if (params.params === undefined || params.params.publisher_respect_params === undefined) {
+        return;
       }
+      let respectTax = new IntPretty(new Dec(parseFloat(params.params.publisher_respect_params.tax), 2).mul(new Dec(100)))
+        .maxDecimals(0)
+        .locale(false)
+        .toString();
+      setRespectTax(parseInt(respectTax));
+    }
+
+    useEffect(() => {
+      loadParams();
+    },[]);
 
     return (
         <Modal
@@ -128,8 +145,12 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
             <ModalCloseButton />
             <ModalBody pb={6}>
                 <Alert status='info' mb={2}>
-                <AlertIcon />
-                Use your coins to show gratitude to the publisher. 1 BZE = 1 Respect! Part of the coins go to the publisher to keep up the good work, the other part to BZE community for keeping CoinTrunk decentralized. 
+                  <AlertIcon />
+                  Use your coins to show gratitude to the publisher. 1 BZE = 1 Respect! 
+                </Alert>
+                <Alert status='info' mb={2}>
+                  <AlertIcon />
+                  The publisher gets {100 - respectTax}% of the paid amount for his good work and {respectTax}% goes to BZE community for keeping CoinTrunk decentralized. 
                 </Alert>
                 <FormControl>
                 <FormLabel>BZE Amount</FormLabel>
