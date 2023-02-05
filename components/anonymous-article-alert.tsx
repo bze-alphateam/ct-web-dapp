@@ -2,7 +2,7 @@ import { Alert, AlertIcon } from "@chakra-ui/react";
 import { useWallet } from "@cosmos-kit/react";
 import { isPublisher } from "./services";
 import { useEffect, useState } from "react";
-import { getAnonArticleCost, getAnonArticleLimit, getPrettyAnonArticleCost } from "./services/paramsService";
+import { getAnonArticleCost, getAnonArticleLimit } from "./services";
 
 export const AnonymousArticleAlert = () => {
     const [ showAlert, setShowAlert ] = useState(false);
@@ -14,17 +14,15 @@ export const AnonymousArticleAlert = () => {
         if (!isWalletConnected || address === undefined) {
             return;
         }
-        console.log(1);
+        
         let shouldShowAlert = !(await isPublisher(address));
         if (shouldShowAlert) {
-            console.log(2);
             let cost = await getAnonArticleCost();
             setArticleCost(Intl.NumberFormat('en', { notation: 'standard' }).format(cost.div(1000000).toInt()));
-            console.log(3);
+
             let limit = await getAnonArticleLimit();
             setArticleLimit(limit.toString());
             setShowAlert(true);
-            console.log(14);
         }
     }
 

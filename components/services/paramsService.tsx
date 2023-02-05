@@ -1,5 +1,5 @@
 import { bze } from '@bze/bzejs';
-import { getRestUrl, getMinDenom, getMainAsset } from '../../config';
+import { getRestUrl } from '../../config';
 import { QueryParamsResponseSDKType } from "@bze/bzejs/types/codegen/beezee/cointrunk/query";
 import Long from 'long';
 
@@ -49,16 +49,4 @@ export const getAnonArticleCost = async (): Promise<Long> => {
     } 
     
     return Long.fromValue(params.params.anon_article_cost.amount);
-}
-
-export const getPrettyAnonArticleCost = async () => {
-    let priceInMinDenom = await getAnonArticleCost();
-    let returnValue = '';
-    if (priceInMinDenom.isZero()) {
-        returnValue = '0';
-    } else {
-        returnValue = priceInMinDenom.div(1000000).toString();
-    }
-
-    return returnValue + ' ' + getMainAsset().symbol;
 }
