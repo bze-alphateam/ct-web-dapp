@@ -13,10 +13,18 @@ import {
     FormLabel,
     FormHelperText,
     Input,
+    Spinner,
+    useToast,
+    Textarea
   } from '@chakra-ui/react';
 import { useState } from 'react';
-import { extractUrlHost, isAcceptedDomain } from './services/acceptedDomainService';
+import { extractUrlHost, isAcceptedDomain, getAccountBalance, isPublisher, getAnonArticleCost } from './services';
 import { AnonymousArticleAlert } from './anonymous-article-alert';
+import { useWallet } from '@cosmos-kit/react';
+import { bze, getSigningBzeClient } from '@bze/bzejs';
+import { getMinDenom, getRpcUrl } from '../config';
+import { coins } from '@cosmjs/stargate';
+import { Dec, IntPretty } from '@keplr-wallet/unit';
 
 export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClose: () => void}) => {
     const [ isValidTitle, setIsValidTitle ] = useState(false);
@@ -31,6 +39,11 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
     const [ pictureError, setPictureError ] = useState('');
     const [ picture, setPicture ] = useState('');
 
+    const [ pendingSubmit, setPendingSubmit ] = useState(false);
+
+    const toast = useToast();
+    const { offlineSigner, address } = useWallet();
+
     const resetState = () => {
         setIsValidTitle(false);
         setTitleError('');
@@ -43,6 +56,8 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
         setIsValidPicture(true);
         setPictureError('');
         setPicture('');
+
+        setPendingSubmit(false);
     }
 
     const onModalClose = () => {
@@ -115,6 +130,95 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
         .catch((err) => console.log(err));
     }
 
+    const onArticleSubmit = async () => {
+        setPendingSubmit(true);
+        if (offlineSigner === undefined || address === undefined) {
+            toast({
+                title: 'Connect your wallet first',
+                status: 'error',
+                isClosable: true,
+                duration: 10000
+            });
+            return;
+        }
+        validatePicture();
+        validateTitle();
+        validateUrl();
+
+        if (!isValidTitle || !isValidUrl || !isValidPicture) {
+            toast({
+                title: 'Invalid article. Please check the errors.',
+                status: 'error',
+                isClosable: true,
+                duration: 10000
+            });
+
+            setPendingSubmit(false);
+            return;
+        }
+
+        const balance = await getAccountBalance(address);
+        if (balance.balance === undefined) {
+            setPendingSubmit(false);
+            toast({
+              title: 'Can not get balance! ',
+              status: 'error',
+              isClosable: true,
+            })
+
+            return;
+        }
+        
+        if (!(await isPublisher(address))) {
+            let articleCost = await  getAnonArticleCost();
+            if (articleCost.gt(balance.balance.amount)) {
+                toast({
+                    title: 'Insufficient funds',
+                    status: 'error',
+                    isClosable: true,
+                })
+                setPendingSubmit(false);
+                return;
+            }
+        }
+
+        const signingClient = await getSigningBzeClient({rpcEndpoint: getRpcUrl(), signer: offlineSigner});
+        const { addArticle } = bze.cointrunk.v1.MessageComposer.withTypeUrl;
+        const msg = addArticle({
+            publisher: address,
+            title: title,
+            url: url,
+            picture: picture
+        });
+
+        try {
+            const gasEstimated = await signingClient.simulate(address, [msg], undefined)
+            const fee = {
+                amount: coins(0, getMinDenom()),
+                gas: new IntPretty(new Dec(gasEstimated).mul(new Dec(1.3)))
+                  .maxDecimals(0)
+                  .locale(false)
+                  .toString()
+            };
+            let txResult = await signingClient.signAndBroadcast(address, [msg], fee)
+            console.log(txResult);
+            toast({
+                title: 'Your article has been published!',
+                status: 'success',
+                isClosable: true,
+            })
+        } catch (e) {
+            toast({
+                title: 'Error: ' + e,
+                status: 'error',
+                isClosable: true,
+            })
+        }
+
+        setPendingSubmit(false);
+        onModalClose();
+    }
+
     return (
         <Modal
         isOpen={showModal}
@@ -130,8 +234,8 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
                 <ModalBody pb={6}>
                     <AnonymousArticleAlert/>
                     <FormControl isRequired mb={3}>
-                        <FormLabel>Title <Tooltip label='Provide a title as long as possible. Readers should be attracted to click on it.'><QuestionIcon mb={1}/></Tooltip></FormLabel>
-                        <Input name='title' type={'text'} placeholder='Text between 20 and 140 chars' onChange={onTitleChange} onBlur={validateTitle}/>
+                        <FormLabel>Title <Tooltip label='Provide a descriptive title. Readers should be attracted to click on it.'><QuestionIcon mb={1}/></Tooltip></FormLabel>
+                        <Textarea name='title' placeholder='Text between 20 and 140 chars' onChange={onTitleChange} onBlur={validateTitle}/>
                         {
                             isValidTitle === true ?
                             <FormHelperText>OK! <CheckIcon color={'green'}/></FormHelperText> :
@@ -152,7 +256,7 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
                         }
                     </FormControl>
                     <FormControl mb={3}>
-                        <FormLabel>Picture URL <Tooltip label='You can provide a picture to be displayed in article listing'><QuestionIcon mb={1}/></Tooltip></FormLabel>
+                        <FormLabel>Picture URL <Tooltip label='Optional: provide a picture to be displayed in article listing'><QuestionIcon mb={1}/></Tooltip></FormLabel>
                         <Input name='picture' type={'text'} placeholder='A picture for your article' onChange={onPictureChange}  onBlur={validatePicture}/>
                         {
                             isValidPicture === true ?
@@ -164,7 +268,7 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
                     </FormControl>
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme='blue' mr={3}>Submit</Button>
+                    <Button disabled={pendingSubmit} colorScheme='blue' mr={3} onClick={onArticleSubmit}>{pendingSubmit && (<Spinner size='xs' />)}Submit</Button>
                     <Button onClick={onModalClose}>Cancel</Button>
                 </ModalFooter>
             </ModalContent>

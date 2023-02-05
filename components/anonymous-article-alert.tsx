@@ -29,17 +29,17 @@ export const AnonymousArticleAlert = () => {
     useEffect(() => {
         loadParams();
     }, []);
-   
+
     return (
         <>
-        {
-            showAlert && 
-            <Alert status='warning' mb={3}>
-                <AlertIcon />
-                Attention! You are not a publisher on BZE blockchain.
-                Only publishers accepted by the blockchain can post unlimited articles for free. Anonymous articles cost {articleCost} BZE and are limited to {articleLimit} each month.
-            </Alert>
-        }
+            {
+                showAlert && 
+                <Alert status='warning' mb={3}>
+                    <AlertIcon />
+                    Attention! You are not a publisher on BZE blockchain.
+                    Only publishers accepted by the blockchain can post unlimited articles for free. Anonymous articles cost {articleCost} BZE and are limited to {articleLimit} each month.
+                </Alert>
+            }
         </>
     );
 }
