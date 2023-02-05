@@ -23,6 +23,8 @@ import {
   FormLabel,
   Input,
   Spinner,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react';
 import { PublisherArticlesCountBadge, PublisherRespectBadge } from './badges';
 import { ConnectedShowAddress } from './react'
@@ -164,6 +166,10 @@ export const PublisherListItem = ({name, address, active, articles_count, create
           <ModalHeader>Pay your respect to: {name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
+            <Alert status='info' mb={2}>
+              <AlertIcon />
+              Use your coins to show gratitude to the publisher. 1 BZE = 1 Respect! Part of the coins go to the publisher to keep up the good work, the other part to BZE community for keeping CoinTrunk decentralized. 
+            </Alert>
             <FormControl>
               <FormLabel>BZE Amount</FormLabel>
               <Input disabled={submittingForm} name='amount' type={'number'} ref={initialRef} placeholder='Total BZE you pay' onChange={onAmountChange} />
