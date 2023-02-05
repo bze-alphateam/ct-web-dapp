@@ -53,7 +53,7 @@ export default function PublisherPage({address}: {address: string}) {
     return (
         <Container maxW="7xl" py={5}>
             <NextHead></NextHead>
-            <Navbar current=''></Navbar>
+            <Navbar current='' onSubmitArticleSuccess={() => {}}></Navbar>
             {!isLoading && <TitleBox key={pageTitleBox.title} {...pageTitleBox} ></TitleBox>}
             <Grid
                 templateColumns={{

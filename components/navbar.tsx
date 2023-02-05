@@ -45,7 +45,7 @@ const NavLink = ({ children, current }: { children: JsonObject, current: string}
   </Link>
 );
 
-export default function Navbar({current}: {current: string}) {
+export default function Navbar({current, onSubmitArticleSuccess}: {current: string, onSubmitArticleSuccess: () => void}) {
   const { isOpen: isMenuOpen, onOpen: onMenuOpen, onClose: onMenuClose } = useDisclosure();
   const { isWalletConnected, connect } = useWallet();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -65,7 +65,7 @@ export default function Navbar({current}: {current: string}) {
   
   return (
     <>
-      <ArticleAddModal showModal={showModal} onClose={onModalClose}/>
+      <ArticleAddModal showModal={showModal} onClose={onModalClose} onSubmitSuccess={onSubmitArticleSuccess}/>
       <Box px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton

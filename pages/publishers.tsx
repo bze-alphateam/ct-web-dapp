@@ -38,7 +38,7 @@ export default function Publishers() {
   return (
     <Container maxW="7xl" py={5}>
       <NextHead></NextHead>
-      <Navbar current='Publishers'></Navbar>
+      <Navbar current='Publishers' onSubmitArticleSuccess={() => {}}></Navbar>
       <TitleBox key={pageTitleBox.title} {...pageTitleBox} ></TitleBox>
       <Grid
         templateColumns={{

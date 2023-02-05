@@ -26,7 +26,7 @@ import { getMinDenom, getRpcUrl } from '../config';
 import { coins } from '@cosmjs/stargate';
 import { Dec, IntPretty } from '@keplr-wallet/unit';
 
-export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClose: () => void}) => {
+export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModal: boolean, onClose: () => void, onSubmitSuccess: () => void}) => {
     const [ isValidTitle, setIsValidTitle ] = useState(false);
     const [ titleError, setTitleError] = useState('');
     const [ title, setTitle ] = useState('');
@@ -201,18 +201,19 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
                   .toString()
             };
             let txResult = await signingClient.signAndBroadcast(address, [msg], fee)
-            console.log(txResult);
+            
             toast({
                 title: 'Your article has been published!',
                 status: 'success',
                 isClosable: true,
-            })
+            });
+            onSubmitSuccess();
         } catch (e) {
             toast({
                 title: 'Error: ' + e,
                 status: 'error',
                 isClosable: true,
-            })
+            });
         }
 
         setPendingSubmit(false);

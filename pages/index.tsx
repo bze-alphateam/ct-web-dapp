@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <Container maxW="7xl" py={5}>
       <NextHead></NextHead>
-      <Navbar current='Articles'></Navbar>
+      <Navbar current='Articles' onSubmitArticleSuccess={() => {}}></Navbar>
       <TitleBox key={pageTitleBox.title} {...pageTitleBox} ></TitleBox>
       <Grid
         templateColumns={{
