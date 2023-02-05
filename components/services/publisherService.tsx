@@ -7,6 +7,19 @@ import { paginationDefaultParams } from './paginationService';
 
 const LOCAL_STORAGE_PUBLISHER_PREFIX = 'publisher:'
 
+export const isPublisher = async (address: string): Promise<boolean> => {
+  try {
+    const data = await getPublisherData(address);
+    if (data === undefined) {
+        return false;
+    }
+  
+    return data.active;
+  } catch (_) {
+    return false;
+  }
+}
+
 export const getPublisherData = async (publisher: string): Promise<PublisherSDKType|undefined> => {
   let localStorageKey = LOCAL_STORAGE_PUBLISHER_PREFIX + publisher;
   let localData = localStorage.getItem(localStorageKey);

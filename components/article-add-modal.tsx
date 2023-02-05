@@ -1,17 +1,6 @@
-import { QuestionIcon, CheckIcon, WarningIcon, CloseIcon } from '@chakra-ui/icons';
-import { bze } from '@bze/bzejs';
+import { QuestionIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons';
 import {
-    Box,
-    Flex,
-    HStack,
-    Link,
-    IconButton,
-    Image,
-    Icon,
     Button,
-    useDisclosure,
-    Stack,
-    useColorMode,
     Tooltip,
     Modal,
     ModalOverlay,
@@ -24,11 +13,10 @@ import {
     FormLabel,
     FormHelperText,
     Input,
-    Alert,
-    AlertIcon,
   } from '@chakra-ui/react';
 import { useState } from 'react';
 import { extractUrlHost, isAcceptedDomain } from './services/acceptedDomainService';
+import { AnonymousArticleAlert } from './anonymous-article-alert';
 
 export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClose: () => void}) => {
     const [ isValidTitle, setIsValidTitle ] = useState(false);
@@ -140,11 +128,7 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
                 <ModalHeader textAlign={'center'}>Add Article</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
-                    <Alert status='warning' mb={3}>
-                        <AlertIcon />
-                        Attention! You are not a publisher on BZE blockchain.
-                        Only publishers accepted by the blockchain can post unlimited articles for free. Anonymous articles cost 25,000 and are limited to 5 each month.
-                    </Alert>
+                    <AnonymousArticleAlert/>
                     <FormControl isRequired mb={3}>
                         <FormLabel>Title <Tooltip label='Provide a title as long as possible. Readers should be attracted to click on it.'><QuestionIcon mb={1}/></Tooltip></FormLabel>
                         <Input name='title' type={'text'} placeholder='Text between 20 and 140 chars' onChange={onTitleChange} onBlur={validateTitle}/>
