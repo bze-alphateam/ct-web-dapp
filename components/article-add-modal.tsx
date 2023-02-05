@@ -43,6 +43,25 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
     const [ pictureError, setPictureError ] = useState('');
     const [ picture, setPicture ] = useState('');
 
+    const resetState = () => {
+        setIsValidTitle(false);
+        setTitleError('');
+        setTitle('');
+        
+        setIsValidUrl(false);
+        setUrlError('');
+        setUrl('');
+
+        setIsValidPicture(true);
+        setPictureError('');
+        setPicture('');
+    }
+
+    const onModalClose = () => {
+        resetState();
+        onClose();
+    }
+
     const onTitleChange = (event: any) => {
         setTitle(event.target.value);
     }
@@ -111,9 +130,10 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
     return (
         <Modal
         isOpen={showModal}
-        onClose={onClose}
+        onClose={onModalClose}
         closeOnOverlayClick={false}
         isCentered
+        size={'xl'}
         >
             <ModalOverlay />
             <ModalContent>
@@ -161,7 +181,7 @@ export const ArticleAddModal = ({showModal, onClose}: {showModal: boolean, onClo
                 </ModalBody>
                 <ModalFooter>
                     <Button colorScheme='blue' mr={3}>Submit</Button>
-                    <Button onClick={onClose}>Cancel</Button>
+                    <Button onClick={onModalClose}>Cancel</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

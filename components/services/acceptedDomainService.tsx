@@ -3,10 +3,35 @@ import { getRestUrl } from "../../config";
 import { QueryAcceptedDomainResponseSDKType } from "@bze/bzejs/types/codegen/beezee/cointrunk/query";
 import { AcceptedDomainSDKType } from "@bze/bzejs/types/codegen/beezee/cointrunk/accepted_domain";
 
-export const getAcceptedDomains = async (): Promise<QueryAcceptedDomainResponseSDKType> => {
-    let client = await bze.ClientFactory.createLCDClient({restEndpoint: getRestUrl()});
+const LOCAL_STORAGE_PREFIX = 'acceptedDomains:'
+const LOCAL_CACHE_TTL = 1000 * 60 * 30; //30 minutes
 
-    return client.bze.cointrunk.v1.acceptedDomain();
+export const getAcceptedDomains = async (): Promise<QueryAcceptedDomainResponseSDKType> => {
+    let storageKey = LOCAL_STORAGE_PREFIX + 'all';
+    let localData = localStorage.getItem(storageKey);
+    if (null !== localData) {
+        let parsed = JSON.parse(localData);
+        if (parsed) {
+            if (parsed.expiresAt > new Date().getTime()) {
+                
+                return new Promise<QueryAcceptedDomainResponseSDKType> ((resolve) => {
+                    resolve({...parsed.acceptedDomainResponse});
+                })
+            }
+        }
+    }
+    
+    let client = await bze.ClientFactory.createLCDClient({restEndpoint: getRestUrl()});
+    let response = await client.bze.cointrunk.v1.acceptedDomain();
+    let cacheData = {
+        acceptedDomainResponse: {...response},
+        expiresAt: new Date().getTime() + LOCAL_CACHE_TTL,
+    }
+    localStorage.setItem(storageKey, JSON.stringify(cacheData));
+
+    return new Promise<QueryAcceptedDomainResponseSDKType> ((resolve) => {
+        resolve(response);
+    })
 }
 
 export const extractUrlHost = (url: string): string|null => {

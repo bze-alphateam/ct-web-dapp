@@ -1,4 +1,3 @@
-
 import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { bze } from '@bze/bzejs';
 import { getRestUrl } from '../../config';

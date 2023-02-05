@@ -109,6 +109,9 @@ export default function Navbar({current}: {current: string}) {
               {Links.map((link) => (
                 <NavLink key={link.name} current={current}>{link}</NavLink>
               ))}
+              <Button colorScheme={'orange'} border='2px' variant='outline' onClick={() => {setShowModal(true)}}>
+                Add Article
+              </Button>
             </Stack>
           </Box>
         ) : null}
