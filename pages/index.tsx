@@ -26,18 +26,25 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true)
   const [articlesListResponse, setArticlesListResponse] = useState<QueryAllArticlesResponseSDKType|null>(null)
 
+  const loadArticles = async () => {
+    let articles = await getAllArticles();
+    setArticlesListResponse(typeof articles === 'undefined' ? null : articles)
+    setLoading(false)
+  }
+
+  const onSubmitArticleSuccess = () => {
+    setLoading(true);
+    loadArticles();
+  }
+
   useEffect(() => {
-    getAllArticles()
-    .then((res) => {
-      setArticlesListResponse(typeof res === 'undefined' ? null : res)
-      setLoading(false)
-    })
+    loadArticles();
   }, [])
 
   return (
     <Container maxW="7xl" py={5}>
       <NextHead></NextHead>
-      <Navbar current='Articles' onSubmitArticleSuccess={() => {}}></Navbar>
+      <Navbar current='Articles' onSubmitArticleSuccess={onSubmitArticleSuccess}></Navbar>
       <TitleBox key={pageTitleBox.title} {...pageTitleBox} ></TitleBox>
       <Grid
         templateColumns={{
