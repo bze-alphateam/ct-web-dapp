@@ -27,6 +27,7 @@ import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import { JsonObject } from '@cosmjs/cosmwasm-stargate';
 import { WalletSection } from '../components';
 import { ArticleAddModal } from './article-add-modal';
+import { useWallet } from '@cosmos-kit/react';
 
 const Links = [
     {
@@ -56,11 +57,20 @@ const NavLink = ({ children, current }: { children: JsonObject, current: string}
 
 export default function Navbar({current}: {current: string}) {
   const { isOpen: isMenuOpen, onOpen: onMenuOpen, onClose: onMenuClose } = useDisclosure();
+  const { isWalletConnected, connect } = useWallet();
   const { colorMode, toggleColorMode } = useColorMode();
   const [ showModal, setShowModal ] = useState(false)
   
   const onModalClose = () => {
     setShowModal(false);
+  }
+
+  const onOpenModal = () => {
+    if (!isWalletConnected) {
+      connect();
+    } else {
+      setShowModal(true); 
+    }
   }
   
   return (
@@ -88,7 +98,7 @@ export default function Navbar({current}: {current: string}) {
               {Links.map((link) => (
                 <NavLink key={link.name} current={current}>{link}</NavLink>
               ))}
-              <Button colorScheme={'orange'} border='2px' variant='outline' onClick={() => {setShowModal(true)}}>
+              <Button colorScheme={'orange'} border='2px' variant='outline' onClick={onOpenModal}>
                   Add Article
               </Button>
             </HStack>
@@ -109,7 +119,7 @@ export default function Navbar({current}: {current: string}) {
               {Links.map((link) => (
                 <NavLink key={link.name} current={current}>{link}</NavLink>
               ))}
-              <Button colorScheme={'orange'} border='2px' variant='outline' onClick={() => {setShowModal(true)}}>
+              <Button colorScheme={'orange'} border='2px' variant='outline' onClick={onOpenModal}>
                 Add Article
               </Button>
             </Stack>
