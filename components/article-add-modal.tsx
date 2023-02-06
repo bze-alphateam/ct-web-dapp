@@ -17,14 +17,15 @@ import {
     useToast,
     Textarea
   } from '@chakra-ui/react';
-import { useState } from 'react';
-import { extractUrlHost, isAcceptedDomain, getAccountBalance, isPublisher, getAnonArticleCost } from './services';
+import { useEffect, useState } from 'react';
+import { extractUrlHost, isAcceptedDomain, getAccountBalance, isPublisher, getAnonArticleCost, getActiveAcceptedDomains } from './services';
 import { AnonymousArticleAlert } from './anonymous-article-alert';
 import { useWallet } from '@cosmos-kit/react';
 import { bze, getSigningBzeClient } from '@bze/bzejs';
 import { getMinDenom, getRpcUrl } from '../config';
 import { coins } from '@cosmjs/stargate';
 import { Dec, IntPretty } from '@keplr-wallet/unit';
+import { AcceptedDomainSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/accepted_domain';
 
 export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModal: boolean, onClose: () => void, onSubmitSuccess: () => void}) => {
     const [ isValidTitle, setIsValidTitle ] = useState(false);
@@ -40,6 +41,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
     const [ picture, setPicture ] = useState('');
 
     const [ pendingSubmit, setPendingSubmit ] = useState(false);
+    const [ acceptedDomainsList, setAcceptedDomainsList] = useState('');
 
     const toast = useToast();
     const { offlineSigner, address } = useWallet();
@@ -200,7 +202,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
                   .locale(false)
                   .toString()
             };
-            let txResult = await signingClient.signAndBroadcast(address, [msg], fee)
+            await signingClient.signAndBroadcast(address, [msg], fee)
             
             toast({
                 title: 'Your article has been published!',
@@ -219,6 +221,18 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
         setPendingSubmit(false);
         onModalClose();
     }
+
+    const loadAcceptedDomains = async () => {
+        let list = await getActiveAcceptedDomains();
+        let arrayList: string[] = [];
+        list.map((elem: AcceptedDomainSDKType) => {arrayList.push(elem.domain)});
+
+        setAcceptedDomainsList(arrayList.join(', '));
+    }
+
+    useEffect(() => {
+        loadAcceptedDomains();
+    }, []);
 
     return (
         <Modal
@@ -246,7 +260,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
                         }
                     </FormControl>
                     <FormControl isRequired mb={3}>
-                        <FormLabel>URL</FormLabel>
+                        <FormLabel>URL <Tooltip label={'Accepted domains: ' + acceptedDomainsList}><QuestionIcon mb={1}/></Tooltip></FormLabel>
                         <Input name='url' type={'text'} placeholder='Article source URL' onChange={onUrlChange}  onBlur={validateUrl}/>
                         {
                             isValidUrl === true ?

@@ -34,6 +34,13 @@ export const getAcceptedDomains = async (): Promise<QueryAcceptedDomainResponseS
     })
 }
 
+export const getActiveAcceptedDomains = async (): Promise<AcceptedDomainSDKType[]> => {
+    let ad = await getAcceptedDomains();
+    let filtered = ad.acceptedDomain.filter(ad => ad.active);
+
+    return filtered;
+}
+
 export const extractUrlHost = (url: string): string|null => {
     try {
         const urlObject = new URL(url);

@@ -14,6 +14,7 @@ import {
     Spinner,
     Alert,
     AlertIcon,
+    FormHelperText,
 } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { bze } from '@bze/bzejs';
@@ -29,13 +30,13 @@ import Link from 'next/link';
 
 export const PublisherPayRespectModal = ({showModal, publisherName, publisherAddress, onSubmitSuccess, onModalClose}: {showModal: boolean, publisherName: string, onSubmitSuccess: () => void, publisherAddress: string, onModalClose: () => void}) => {
     const initialRef = useRef(null);
-    const [submittingForm, setSubmittingForm] = useState(false);
+    const [ submittingForm, setSubmittingForm ] = useState(false);
     const { offlineSigner, address: walletAddress } = useWallet();
     const [ respectTax, setRespectTax ] = useState(0);
     const toast = useToast();
+    const [ currentBalance, setCurrentBalance] = useState(new Dec(0));
 
     let amount = new Dec(0);
-
     const onAmountChange = (event: any) => {
         let floatAmt = parseFloat(event.target.value);
         if (isNaN(floatAmt)) {
@@ -53,8 +54,7 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
           }
           setSubmittingForm(true);
     
-          const amountInUbze = amount.mul(new Dec(1000000));
-          const paidAmount = new IntPretty(amountInUbze).maxDecimals(0).locale(false).toString()
+          const paidAmount = new IntPretty(amount.mul(new Dec(1000000))).maxDecimals(0).locale(false).toString()
           const balance = await getAccountBalance(walletAddress);
           if (balance.balance === undefined) {
             setSubmittingForm(false);
@@ -67,7 +67,7 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
             return;
           }
     
-          if (amountInUbze.gte(new Dec(balance.balance.amount))) {
+          if (amount.gte(currentBalance)) {
             setSubmittingForm(false);
             toast({
               title: 'Insufficient funds!',
@@ -112,6 +112,7 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
           }
           
           setSubmittingForm(false);
+          loadParams();
           onModalClose();
         }
     }
@@ -126,6 +127,12 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
         .locale(false)
         .toString();
       setRespectTax(parseInt(respectTax));
+      if (walletAddress !== undefined) {
+        const balance = await getAccountBalance(walletAddress);
+        if (balance.balance) {
+          setCurrentBalance(new Dec(balance.balance.amount, 6));
+        }
+      }
     }
 
     useEffect(() => {
@@ -153,8 +160,9 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
                   The publisher gets {100 - respectTax}% of the paid amount for his good work and {respectTax}% goes to BZE community for keeping CoinTrunk decentralized. 
                 </Alert>
                 <FormControl>
-                <FormLabel>BZE Amount</FormLabel>
-                <Input disabled={submittingForm} name='amount' type={'number'} ref={initialRef} placeholder='Total BZE you pay' onChange={onAmountChange} />
+                  <FormLabel>BZE Amount</FormLabel>
+                  <Input disabled={submittingForm} name='amount' type={'number'} ref={initialRef} placeholder='Total BZE you pay' onChange={onAmountChange} />
+                  <FormHelperText>Available: {new IntPretty(currentBalance).maxDecimals(6).toString()}</FormHelperText>
                 </FormControl>
             </ModalBody>
 
