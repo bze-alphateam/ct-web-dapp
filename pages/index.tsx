@@ -38,10 +38,10 @@ export async function getServerSideProps(ctx: any) {
   };
 }
 
-export default function Home({page}: {page: number}) {
+export default function Home({page}: {page: string}) {
   const [ isLoading, setLoading ] = useState(true)
   const [ articlesListResponse, setArticlesListResponse ] = useState<QueryAllArticlesResponseSDKType|null>(null)
-  const [ currentPage, setCurrentPage ] = useState(page);
+  const [ currentPage, setCurrentPage ] = useState(parseInt(page));
   const [ hasNextPage, setHasNextPage] = useState(true);
   const articlesLimit = 10;
 
