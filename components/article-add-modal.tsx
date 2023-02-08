@@ -283,7 +283,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
                     </FormControl>
                 </ModalBody>
                 <ModalFooter>
-                    <Button disabled={pendingSubmit} colorScheme='blue' mr={3} onClick={onArticleSubmit}>{pendingSubmit && (<Spinner size='xs' />)}Submit</Button>
+                    <Button isLoading={pendingSubmit} loadingText='Submitting' colorScheme='blue' mr={3} onClick={onArticleSubmit}>Submit</Button>
                     <Button onClick={onModalClose}>Cancel</Button>
                 </ModalFooter>
             </ModalContent>

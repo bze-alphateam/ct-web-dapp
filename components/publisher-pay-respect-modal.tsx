@@ -167,8 +167,8 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
             </ModalBody>
 
             <ModalFooter>
-                <Button disabled={submittingForm} colorScheme='blue' mr={3} onClick={onPayRespectButtonClick()}>
-                {submittingForm && (<Spinner size='xs' />)}{' '}Pay
+                <Button isLoading={submittingForm} colorScheme='blue' mr={3} onClick={onPayRespectButtonClick()}>
+                  Pay
                 </Button>
                 <Button onClick={onModalClose}>Cancel</Button>
             </ModalFooter>

@@ -63,7 +63,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
           <Flex padding={2} justifyContent={'center'}>
             <Box maxW={{base: '150px', md: '180px'}} overflow='hidden'>
               <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
-                <Avatar size='2xl' name='Coin Trunk' src={picture} bg={'#cceeff'}/>
+                <Avatar size='2xl' name='Coin Trunk' src={picture.length > 0 ? picture : '/cointrunk.svg'} bg={'#cceeff'} />
               </Link>
             </Box>
           </Flex>
