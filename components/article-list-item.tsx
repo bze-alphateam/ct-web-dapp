@@ -105,7 +105,9 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
                   {' '}&bull;{' '}
                   {isLoading ?
                     (<Spinner as='span' size='sm'/>) :
-                    (<Link target={'_blank'} href={publisherDetails?.address ? '/publisher/' + publisherDetails?.address : getExplorerBaseUrl() + '/account/' + publisher}>{publisherDetails?.name ?? stringTruncateFromCenter(publisher, 14)}</Link>)
+                    publisherDetails?.address ? 
+                    (<Link href={'/publisher/' + publisherDetails?.address}>{publisherDetails?.name}</Link>) :
+                    (<Link target={'_blank'} href={getExplorerBaseUrl() + '/account/' + publisher}>{stringTruncateFromCenter(publisher, 14)}</Link>)
                   }
                 </Text>
               </Box>
