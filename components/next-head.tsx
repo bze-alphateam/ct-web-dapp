@@ -4,9 +4,9 @@ export const NextHead = () => {
   
     return (
         <Head>
-          <title>CoinTrunk Web App</title>
-          <meta name="description" content="CoinTrunk Decentralized App" />
-          <link rel="icon" href="/favicon.ico" />
+          <title>CoinTrunk App</title>
+          <meta name="description" content="CoinTrunk Decentralized App - serving decentralized content" />
+          <link rel="icon" href="/cointrunk-16px.png" />
         </Head>
     );
 }

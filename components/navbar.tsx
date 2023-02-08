@@ -77,8 +77,8 @@ export const Navbar = ({current, onSubmitArticleSuccess}: {current: string, onSu
           />
           <HStack spacing={2} alignItems={'center'}>
             <Box display={{ base: 'none', md: 'flex' }}>
-                <Link>
-                    <Image src='/bze.svg' alt='cointrunk web app' boxSize='40px'></Image>
+                <Link href='/'>
+                    <Image src='/cointrunk.svg' alt='cointrunk web app' boxSize='40px'></Image>
                 </Link>
             </Box>
             <HStack
