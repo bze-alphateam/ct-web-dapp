@@ -13,3 +13,4 @@ export * from './article-add-modal';
 export * from './footer';
 export * from './info-grid';
 export * from './publisher-pay-respect-modal';
+export * from './pagination'

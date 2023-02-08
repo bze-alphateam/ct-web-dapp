@@ -51,7 +51,7 @@ export const InfoLink = ({url, title}: Info) => {
 
 export const InfoGrid = ({info}: InfoList) => {
     return (
-        <Grid templateColumns={{ md: '1fr 1fr' }} gap={8} mb={20}>
+        <Grid templateColumns={{ md: '1fr 1fr' }} gap={8} mb={20} mt={10}>
         {info.map((infoItem: Info) => (
           <InfoLink key={infoItem.title} {...infoItem}></InfoLink>
         ))}

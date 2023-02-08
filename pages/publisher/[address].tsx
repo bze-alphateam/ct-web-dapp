@@ -26,7 +26,7 @@ export async function getServerSideProps(ctx: any) {
         address,
       },
     };
-  }
+}
   
 export default function PublisherPage({address}: {address: string}) {
     const [isLoading, setLoading] = useState(true)

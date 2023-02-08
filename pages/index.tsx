@@ -14,12 +14,14 @@ import {
   NextHead,
   Footer,
   InfoGrid,
-  DappWarning
+  DappWarning,
+  Pagination
 } from '../components';
 import { infoGrid } from '../config';
 import { QueryAllArticlesResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
-import { getAllArticles } from '../components/services';
+import { buildLimitPagination, getAllArticles } from '../components/services';
+import { PageRequest } from '@bze/bzejs/types/codegen/cosmos/base/query/v1beta1/pagination';
 
 const pageTitleBox: PageTitleProps = {
   title: 'Articles',
@@ -27,13 +29,32 @@ const pageTitleBox: PageTitleProps = {
   subTitleHighlighted: 'CoinTrunk articles'
 }
 
-export default function Home() {
-  const [isLoading, setLoading] = useState(true)
-  const [articlesListResponse, setArticlesListResponse] = useState<QueryAllArticlesResponseSDKType|null>(null)
+export async function getServerSideProps(ctx: any) {
+  const page  = ctx.query.page ?? 1;
+  return {
+    props: {
+      page,
+    },
+  };
+}
 
-  const loadArticles = async () => {
-    let articles = await getAllArticles();
-    setArticlesListResponse(typeof articles === 'undefined' ? null : articles)
+export default function Home({page}: {page: number}) {
+  const [ isLoading, setLoading ] = useState(true)
+  const [ articlesListResponse, setArticlesListResponse ] = useState<QueryAllArticlesResponseSDKType|null>(null)
+  const [ currentPage, setCurrentPage ] = useState(page);
+  const [ hasNextPage, setHasNextPage] = useState(true);
+  const articlesLimit = 10;
+
+  const loadArticles = async (pagination: PageRequest) => {
+    let articles = await getAllArticles(pagination);
+    if (typeof articles === 'undefined') {
+      setArticlesListResponse(null);
+      setLoading(false);
+      return;
+    }
+    
+    setArticlesListResponse(articles)
+    setHasNextPage(articles.article.length >= articlesLimit);
     setLoading(false)
   }
 
@@ -42,8 +63,25 @@ export default function Home() {
     loadArticles();
   }
 
+  const onBackPage = () => {
+    if (currentPage <= 1) {
+      return;
+    }
+
+    setLoading(true);
+    setCurrentPage(currentPage - 1);
+    loadArticles(buildLimitPagination(articlesLimit, (currentPage - 2) * articlesLimit));
+  }
+
+  const onNextPage = () => {
+    setLoading(true);
+    setCurrentPage(currentPage + 1);
+    loadArticles(buildLimitPagination(articlesLimit, currentPage * articlesLimit));
+  }
+
   useEffect(() => {
-    loadArticles();
+    let offset = (currentPage - 1) * articlesLimit;
+    loadArticles(buildLimitPagination(articlesLimit, offset));
   }, [])
 
   return (
@@ -58,8 +96,8 @@ export default function Home() {
           lg: 'repeat(1, 1fr)'
         }}
         gap={8}
-        mb={14}
-        mt={20}
+        mb={5}
+        mt={5}
       >
         {
           isLoading ?
@@ -71,6 +109,14 @@ export default function Home() {
           )
         }
       </Grid>
+      <Box>
+        <Pagination
+          currentPage={currentPage}
+          onBack={onBackPage}
+          onForward={onNextPage}
+          hasNext={hasNextPage}
+        />
+      </Box>
       <InfoGrid key='info-art' info={infoGrid}></InfoGrid>
       <Box mb={3}>
         <Divider />
