@@ -6,12 +6,17 @@ import {
   Spinner,
   Flex,
 } from '@chakra-ui/react';
-import { ArticleListItem, TitleBox, PageTitleProps } from '../components';
+import {
+  ArticleListItem,
+  TitleBox,
+  PageTitleProps,
+  Navbar,
+  NextHead,
+  Footer,
+  InfoGrid,
+  DappWarning
+} from '../components';
 import { infoGrid } from '../config';
-import Navbar from '../components/navbar';
-import NextHead from '../components/next-head';
-import Footer from '../components/footer';
-import { InfoGrid } from '../components/info-grid';
 import { QueryAllArticlesResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
 import { getAllArticles } from '../components/services';
@@ -46,6 +51,7 @@ export default function Home() {
       <NextHead></NextHead>
       <Navbar current='Articles' onSubmitArticleSuccess={onSubmitArticleSuccess}></Navbar>
       <TitleBox key={pageTitleBox.title} {...pageTitleBox} ></TitleBox>
+      <DappWarning/>
       <Grid
         templateColumns={{
           md: 'repeat(1, 1fr)',

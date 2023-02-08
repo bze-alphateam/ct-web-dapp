@@ -4,7 +4,7 @@ import {
     Link,
   } from '@chakra-ui/react';
 
-export default function Footer() {
+export const Footer = () => {
     return (
         <Stack
         isInline={true}

@@ -45,7 +45,7 @@ const NavLink = ({ children, current }: { children: JsonObject, current: string}
   </Link>
 );
 
-export default function Navbar({current, onSubmitArticleSuccess}: {current: string, onSubmitArticleSuccess: () => void}) {
+export const Navbar = ({current, onSubmitArticleSuccess}: {current: string, onSubmitArticleSuccess: () => void}) => {
   const { isOpen: isMenuOpen, onOpen: onMenuOpen, onClose: onMenuClose } = useDisclosure();
   const { isWalletConnected, connect } = useWallet();
   const { colorMode, toggleColorMode } = useColorMode();

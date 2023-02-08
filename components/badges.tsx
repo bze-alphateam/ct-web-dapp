@@ -1,8 +1,6 @@
 import { Badge } from "@chakra-ui/react"
 import Long from "long";
 
-const SIX_HOURS_IN_MILLISECONDS = 6 * 60 * 60 * 1000;
-
 export function respectBadgeParams({respect}: {respect: Long}): {text: string, color: string}|null {
     respect = Long.fromValue(respect);
     if (respect.lt(10000000000)) {
@@ -37,7 +35,7 @@ export const PublisherRespectBadge = ({respect}: {respect: Long}): JSX.Element =
     switch (true) {
       case articlesCount >= 100:
         badgeColor = 'green'
-        badgeText = '100 articles'
+        badgeText = `${articlesCount} articles`
         break;
       case articlesCount >= 50:
         badgeColor = 'orange'
@@ -60,10 +58,11 @@ export const ArticleContentBadge = ({url}: {url: string}): JSX.Element => {
 
 export const ArticleJustPublished = ({createdAt}: {createdAt: Long}): JSX.Element => {
     let currentDate = new Date();
-    if ((currentDate.getTime() -  (Long.fromValue(createdAt).toInt() * 1000)) > SIX_HOURS_IN_MILLISECONDS ) {
+    let justPublishedAge = 24 * 60 * 60 * 1000;
+    if ((currentDate.getTime() -  (Long.fromValue(createdAt).toInt() * 1000)) > justPublishedAge ) {
         
         return (<></>)
     }
 
-    return (<Badge px='2' m={{base: 1}} colorScheme='yellow'>just published</Badge>)
+    return (<Badge px='2' m={{base: 1}} colorScheme='yellow'>published today</Badge>)
 }
