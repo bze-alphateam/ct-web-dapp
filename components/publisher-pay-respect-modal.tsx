@@ -31,7 +31,7 @@ import Link from 'next/link';
 export const PublisherPayRespectModal = ({showModal, publisherName, publisherAddress, onSubmitSuccess, onModalClose}: {showModal: boolean, publisherName: string, onSubmitSuccess: () => void, publisherAddress: string, onModalClose: () => void}) => {
     const initialRef = useRef(null);
     const [ submittingForm, setSubmittingForm ] = useState(false);
-    const { offlineSigner, address: walletAddress } = useWallet();
+    const { offlineSigner, address: walletAddress, isWalletConnected } = useWallet();
     const [ respectTax, setRespectTax ] = useState(0);
     const toast = useToast();
     const [ currentBalance, setCurrentBalance] = useState(new Dec(0));
@@ -137,7 +137,7 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
 
     useEffect(() => {
       loadParams();
-    },[]);
+    },[isWalletConnected]);
 
     return (
         <Modal
