@@ -6,11 +6,12 @@ import {
 } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export const Pagination = ({currentPage, hasNext, onBack, onForward}: {currentPage: number, hasNext: boolean, onBack: () => void, onForward: () => void}) => {
-    
+    const router = useRouter();
     useEffect(() => {
-        console.log('effect', currentPage);
+        router.push({query: {page: currentPage}});
     }, [currentPage]);
 
     return (
