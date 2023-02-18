@@ -3,12 +3,12 @@ import Long from "long";
 
 export function respectBadgeParams({respect}: {respect: Long}): {text: string, color: string}|null {
     respect = Long.fromValue(respect);
-    if (respect.lt(10000000000)) {
+    if (respect.lt(50000000000)) {
         return null;
     }
     let badgeColor = 'yellow'
     let badgeText = 'respected'
-    if (respect.gte(100000000000)) {
+    if (respect.gte(1000000000000)) {
         badgeColor = 'teal'
         badgeText = 'highly respected'
     }
