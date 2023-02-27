@@ -83,9 +83,9 @@ const BZE_TESTNET_2_SUGGEST_CHAIN = {
 export const networks = {
     mainnet: {
       base: {
-        explorerBaseUrl: 'https://testnet.explorer.thesilverfox.pro/beezee',
-        rpcUrl: 'https://testnet-rpc.getbze.com',
-        restUrl: 'https://testnet.getbze.com',
+        explorerBaseUrl: 'https://ping.pub/beezee',
+        rpcUrl: 'https://rpc.getbze.com',
+        restUrl: 'https://rest.getbze.com',
         chainName: 'beezee',
         minDenom: 'ubze'
       },
