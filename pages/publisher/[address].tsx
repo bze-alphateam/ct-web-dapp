@@ -44,7 +44,7 @@ export default function PublisherPage({address}: {address: string}) {
                     setLoading(false)
                 })
         }
-    }, []);
+    }, [address]);
     
     return (
         <Container maxW="7xl" py={5}>

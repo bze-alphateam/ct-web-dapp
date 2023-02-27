@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Box,
   Button,
@@ -87,7 +88,7 @@ export const ConnectedShowAddress = ({
           defaultMaxLength[size as keyof typeof defaultMaxLength]
         )
       );
-  }, [address]);
+  }, [address, defaultMaxLength, maxDisplayLength]);
 
   return (
     <Button

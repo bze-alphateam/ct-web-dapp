@@ -61,14 +61,14 @@ export const DappWarning = () => {
                     <AlertTitle>Attention!</AlertTitle>
                     <AlertDescription>
                         <Text>Your are navigating on a Decentralized App and viewing permissionless content submitted on BeeZee (BZE) blockchain.
-                            All the content present here was submitted under blockchain's own rules.
+                            All the content present here was submitted under blockchain&apos;s own rules.
                         </Text>
                         <UnorderedList>
                             <ListItem>Articles can redirect only to Accepted Domains decided through governance proposals</ListItem>
                             <ListItem>Paid articles can be submitted by anyone willing to pay the tax required</ListItem>
                             <ListItem>Paid articles are limited to a certain number each month</ListItem>
                             <ListItem>Publishers are decided through governance proposals</ListItem>
-                            <ListItem>Publisher's respect represents the trust given by the community</ListItem>
+                            <ListItem>Publisher&apos;s respect represents the trust given by the community</ListItem>
                         </UnorderedList>
                     </AlertDescription>
                 </Box>

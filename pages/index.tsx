@@ -60,7 +60,7 @@ export default function Home({page}: {page: string}) {
 
   const onSubmitArticleSuccess = () => {
     setLoading(true);
-    loadArticles();
+    loadArticles(buildLimitPagination(articlesLimit, (currentPage - 2) * articlesLimit));
   }
 
   const onBackPage = () => {
@@ -82,7 +82,7 @@ export default function Home({page}: {page: string}) {
   useEffect(() => {
     let offset = (currentPage - 1) * articlesLimit;
     loadArticles(buildLimitPagination(articlesLimit, offset));
-  }, [])
+  }, [currentPage, articlesLimit])
 
   return (
     <Container maxW="7xl" py={5}>

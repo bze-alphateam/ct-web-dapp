@@ -137,6 +137,7 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
 
     useEffect(() => {
       loadParams();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isWalletConnected]);
 
     return (

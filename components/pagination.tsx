@@ -12,6 +12,7 @@ export const Pagination = ({currentPage, hasNext, onBack, onForward}: {currentPa
     const router = useRouter();
     useEffect(() => {
         router.push({query: {page: currentPage}});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
     return (

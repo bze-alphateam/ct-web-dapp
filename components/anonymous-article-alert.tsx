@@ -9,26 +9,26 @@ export const AnonymousArticleAlert = () => {
     const [ articleCost, setArticleCost ] = useState('');
     const [ articleLimit, setArticleLimit ] = useState(''); 
     const { isWalletConnected, address } = useWallet();
-    
-    const loadParams = async () => {
-        if (!isWalletConnected || address === undefined) {
-            return;
-        }
-        
-        let shouldShowAlert = !(await isPublisher(address));
-        if (shouldShowAlert) {
-            let cost = await getAnonArticleCost();
-            setArticleCost(Intl.NumberFormat('en', { notation: 'standard' }).format(cost.div(1000000).toInt()));
-
-            let limit = await getAnonArticleLimit();
-            setArticleLimit(limit.toString());
-            setShowAlert(true);
-        }
-    }
 
     useEffect(() => {
+        const loadParams = async () => {
+            if (!isWalletConnected || address === undefined) {
+                return;
+            }
+            
+            let shouldShowAlert = !(await isPublisher(address));
+            if (shouldShowAlert) {
+                let cost = await getAnonArticleCost();
+                setArticleCost(Intl.NumberFormat('en', { notation: 'standard' }).format(cost.div(1000000).toInt()));
+    
+                let limit = await getAnonArticleLimit();
+                setArticleLimit(limit.toString());
+                setShowAlert(true);
+            }
+        }
+
         loadParams();
-    }, []);
+    }, [isWalletConnected, address]);
 
     return (
         <>

@@ -37,7 +37,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
           }
         )
     }
-  }, [])
+  }, [publisher, paid])
 
   return (
       <Stack
