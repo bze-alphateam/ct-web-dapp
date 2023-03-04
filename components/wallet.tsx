@@ -35,12 +35,14 @@ export const WalletSection = () => {
     currentChainRecord,
     getChainLogo,
     setCurrentChain,
+    isWalletConnected
   } = walletManager;
 
-  // useEffect(() => {
-  //   console.log('effect', walletStatus)
-  //   setCurrentChain(getChainName());
-  // }, [setCurrentChain]);
+  useEffect(() => {
+    if (!isWalletConnected) {
+      setCurrentChain(getChainName());
+    }
+  }, [setCurrentChain, isWalletConnected]);
 
   const chain = {
     chainName: currentChainName,
