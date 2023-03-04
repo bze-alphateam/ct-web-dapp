@@ -74,7 +74,6 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
               status: 'error',
               isClosable: true,
             })
-            console.log('paid amount higher than current balance');
             onModalClose();
             return;
           }

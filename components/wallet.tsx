@@ -37,9 +37,10 @@ export const WalletSection = () => {
     setCurrentChain,
   } = walletManager;
 
-  useEffect(() => {
-    setCurrentChain(getChainName());
-  }, [setCurrentChain]);
+  // useEffect(() => {
+  //   console.log('effect', walletStatus)
+  //   setCurrentChain(getChainName());
+  // }, [setCurrentChain]);
 
   const chain = {
     chainName: currentChainName,

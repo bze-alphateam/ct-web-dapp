@@ -16,17 +16,14 @@ const showAlertStorageKey = 'dappwarning:ack'
 const shouldShowAlert = (): boolean => {
     const showAlertCached = localStorage.getItem(showAlertStorageKey); 
     if (null === showAlertCached) {
-        console.log(1);
         return true;
     }
 
     const parsed = JSON.parse(showAlertCached);
     if (parsed.expiresAt < new Date().getTime()) {
         localStorage.removeItem(showAlertStorageKey);
-        console.log(2);
         return true;
     }
-    console.log(3);
     return parsed.showAlert;
 }
 
@@ -58,7 +55,7 @@ export const DappWarning = () => {
             <Alert status='warning' justifyContent={'center'}>
                 <AlertIcon />
                 <Box >
-                    <AlertTitle>Attention!</AlertTitle>
+                    <AlertTitle>Attention! This is the beta version of Cointrunk Web App</AlertTitle>
                     <AlertDescription>
                         <Text>Your are navigating on a Decentralized App and viewing permissionless content submitted on BeeZee (BZE) blockchain.
                             All the content present here was submitted under blockchain&apos;s own rules.

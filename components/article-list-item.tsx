@@ -3,7 +3,7 @@ import {
   Avatar,
   Box,
   Flex,
-  Link,
+  Link as UiLink,
   Spacer,
   Stack,
   Text,
@@ -20,6 +20,7 @@ import { respectBadgeParams, ArticleContentBadge, ArticleJustPublished } from '.
 import Long from "long";
 import { getExplorerBaseUrl } from '../config';
 import { getPublisherData } from './services';
+import Link from 'next/link';
 
 export const ArticleListItem = ({id, title, url, picture, publisher, paid, created_at }: ArticleSDKType) => {
   const [isLoading, setLoading] = useState(true)
@@ -62,16 +63,16 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
         <Flex direction={{base: 'column', md: 'row'}} padding={2}>
           <Flex padding={2} justifyContent={'center'}>
             <Box maxW={{base: '150px', md: '180px'}} overflow='hidden'>
-              <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
+              <UiLink href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
                 <Avatar size='2xl' name='Coin Trunk' src={picture.length > 0 ? picture : '/cointrunk.svg'} bg={'#cceeff'} />
-              </Link>
+              </UiLink>
             </Box>
           </Flex>
           <Flex padding={2} justifyContent={'center'} direction={{base: 'column'}} flex={'100%'}>
             <Flex p={2}>
-              <Link href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
+              <UiLink href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
                 <Heading fontSize={{base: '18px', md: '22px'}}> #{Long.fromValue(id).toInt()}.{' '}{title}{' '}<ExternalLinkIcon mx='1px'/></Heading>
-              </Link>
+              </UiLink>
             </Flex>
             <Flex p={2} wrap={'wrap'} m={1}>
               <ArticleJustPublished createdAt={created_at} />

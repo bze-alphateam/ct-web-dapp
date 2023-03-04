@@ -3,7 +3,7 @@ import {
   Box,
   Flex,
   HStack,
-  Link,
+  // Link,
   IconButton,
   Image,
   Icon,
@@ -18,6 +18,7 @@ import { JsonObject } from '@cosmjs/cosmwasm-stargate';
 import { WalletSection } from '../components';
 import { ArticleAddModal } from './article-add-modal';
 import { useWallet } from '@cosmos-kit/react';
+import Link from 'next/link'
 
 const Links = [
     {
@@ -31,18 +32,16 @@ const Links = [
 ];
 
 const NavLink = ({ children, current }: { children: JsonObject, current: string}) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-    }}
-    href={children.path}>
-    <Button variant={current === children.name ? 'outline' : 'ghost'}>
-        {children.name}
-    </Button>
-  </Link>
+  <Flex
+    // px={2}
+    // py={1}
+  >
+    <Link href={children.path}>
+      <Button variant={current === children.name ? 'outline' : 'ghost'} >
+          {children.name}
+      </Button>
+    </Link>
+  </Flex>
 );
 
 export const Navbar = ({current, onSubmitArticleSuccess}: {current: string, onSubmitArticleSuccess: () => void}) => {
@@ -88,7 +87,7 @@ export const Navbar = ({current, onSubmitArticleSuccess}: {current: string, onSu
               {Links.map((link) => (
                 <NavLink key={link.name} current={current}>{link}</NavLink>
               ))}
-              <Button colorScheme={'orange'} border='2px' variant='outline' onClick={onOpenModal}>
+              <Button colorScheme={'orange'} border='1px' variant='outline' onClick={onOpenModal}>
                   Add Article
               </Button>
             </HStack>
