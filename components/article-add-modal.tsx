@@ -250,7 +250,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
                     <AnonymousArticleAlert/>
                     <FormControl isRequired mb={3}>
                         <FormLabel>Title <Tooltip label='Provide a descriptive title. Readers should be attracted to click on it.'><QuestionIcon mb={1}/></Tooltip></FormLabel>
-                        <Textarea name='title' placeholder='Text between 20 and 140 chars' onChange={onTitleChange} onBlur={validateTitle}/>
+                        <Textarea name='title' placeholder='Text between 10 and 320 chars' onChange={onTitleChange} onBlur={validateTitle}/>
                         {
                             isValidTitle === true ?
                             <FormHelperText>OK! <CheckIcon color={'green'}/></FormHelperText> :
