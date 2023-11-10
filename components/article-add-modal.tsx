@@ -72,10 +72,10 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
     }
 
     const validateTitle = () => {
-        if (title.length < 20) {
+        if (title.length < 10) {
             setTitleError('Title too short');
             setIsValidTitle(false);
-        } else if (title.length > 140) {
+        } else if (title.length > 320) {
             setTitleError('Title too long');
             setIsValidTitle(false);
         } else {
@@ -256,7 +256,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
                             <FormHelperText>OK! <CheckIcon color={'green'}/></FormHelperText> :
                             titleError.length > 0 ? 
                             <FormHelperText>{titleError} <CloseIcon color={'red'}/></FormHelperText> :
-                            <FormHelperText>Between 20 and 140 chars</FormHelperText>
+                            <FormHelperText>Between 10 and 320 chars</FormHelperText>
                         }
                     </FormControl>
                     <FormControl isRequired mb={3}>
