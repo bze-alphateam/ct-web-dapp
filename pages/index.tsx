@@ -47,6 +47,7 @@ export default function Home({page}: {page: string}) {
 
   const loadArticles = async (pagination: PageRequest) => {
     let articles = await getAllArticles(pagination);
+    console.log("articles", articles);
     if (typeof articles === 'undefined') {
       setArticlesListResponse(null);
       setLoading(false);
@@ -60,7 +61,7 @@ export default function Home({page}: {page: string}) {
 
   const onSubmitArticleSuccess = () => {
     setLoading(true);
-    loadArticles(buildLimitPagination(articlesLimit, (currentPage - 2) * articlesLimit));
+    loadArticles(buildLimitPagination(articlesLimit, (currentPage - 1) * articlesLimit));
   }
 
   const onBackPage = () => {
@@ -82,7 +83,7 @@ export default function Home({page}: {page: string}) {
   useEffect(() => {
     let offset = (currentPage - 1) * articlesLimit;
     loadArticles(buildLimitPagination(articlesLimit, offset));
-  }, [currentPage, articlesLimit])
+  }, [currentPage])
 
   return (
     <Container maxW="7xl" py={5}>
