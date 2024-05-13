@@ -47,7 +47,7 @@ export default function Home({page}: {page: string}) {
 
   const loadArticles = async (pagination: PageRequest) => {
     let articles = await getAllArticles(pagination);
-    console.log("articles", articles);
+
     if (typeof articles === 'undefined') {
       setArticlesListResponse(null);
       setLoading(false);
