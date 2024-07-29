@@ -21,7 +21,7 @@ export const Footer = () => {
         >
           Cosmology 
         </Link>
-        <Text>and Love by</Text>
+        <Text>and passion by</Text>
         <Link
           href="https://x.com/StefanViB"
           target="_blank"
