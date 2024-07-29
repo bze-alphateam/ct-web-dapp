@@ -23,12 +23,20 @@ export const Footer = () => {
         </Link>
         <Text>and Love by</Text>
         <Link
+          href="https://x.com/StefanViB"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Faneatiku 
+        </Link>
+        <Text> | </Text>
+        <Link
           href="https://getbze.com/"
           target="_blank"
           rel="noopener noreferrer"
         >
           BZE Alpha Team
-          </Link>
+        </Link>
       </Stack>
     );
 }
