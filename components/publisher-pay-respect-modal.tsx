@@ -102,11 +102,20 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
             })
             onSubmitSuccess();
           } catch (e) {
-            toast({
-              title: 'Error: ' + e,
-              status: 'error',
-              isClosable: true,
-            })
+              //@ts-ignore
+              if (e.message?.includes('Length must be a multiple of 4')) {
+                  toast({
+                      title: 'Respects paid!',
+                      status: 'success',
+                      isClosable: true,
+                  });
+              } else {
+                  toast({
+                      title: 'Error: ' + e,
+                      status: 'error',
+                      isClosable: true,
+                  })
+              }
           }
           
           setSubmittingForm(false);

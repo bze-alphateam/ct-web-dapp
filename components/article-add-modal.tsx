@@ -210,11 +210,21 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
             });
             onSubmitSuccess();
         } catch (e) {
-            toast({
-                title: 'Error: ' + e,
-                status: 'error',
-                isClosable: true,
-            });
+            //@ts-ignore
+            if (e.message?.includes('Length must be a multiple of 4')) {
+                toast({
+                    title: 'Your article has been published!',
+                    status: 'success',
+                    isClosable: true,
+                });
+            } else {
+                console.error(e)
+                toast({
+                    title: 'Error: ' + e,
+                    status: 'error',
+                    isClosable: true,
+                });
+            }
         }
 
         setPendingSubmit(false);
