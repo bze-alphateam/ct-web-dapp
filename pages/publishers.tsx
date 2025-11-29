@@ -8,9 +8,9 @@ import {
 } from '@chakra-ui/react';
 import { PageTitleProps, PublisherListItem, TitleBox, NextHead, Navbar, Footer, InfoGrid } from '../components';
 import { infoGrid } from '../config';
-import { QueryPublisherResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
 import { getAllPublishers } from '../components/services';
+import {QueryPublishersResponseSDKType} from "@bze/bzejs/bze/cointrunk/query";
 
 const pageTitleBox: PageTitleProps = {
   title: 'Publishers',
@@ -20,7 +20,7 @@ const pageTitleBox: PageTitleProps = {
 
 export default function Publishers() {  
   const [isLoading, setLoading] = useState(true)
-  const [publishersListResponse, setPublishersListResponse] = useState<QueryPublisherResponseSDKType|null>(null)
+  const [publishersListResponse, setPublishersListResponse] = useState<QueryPublishersResponseSDKType|null>(null)
   
   useEffect(() => {
     getAllPublishers()

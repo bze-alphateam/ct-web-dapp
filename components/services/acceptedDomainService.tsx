@@ -1,7 +1,7 @@
-import { bze } from "@bze/bzejs";
-import { getRestUrl } from "../../config";
-import { QueryAcceptedDomainResponseSDKType } from "@bze/bzejs/types/codegen/beezee/cointrunk/query";
-import { AcceptedDomainSDKType } from "@bze/bzejs/types/codegen/beezee/cointrunk/accepted_domain";
+import {bze} from "@bze/bzejs";
+import {getRestUrl} from "../../config";
+import {QueryAcceptedDomainResponseSDKType} from "@bze/bzejs/bze/cointrunk/query";
+import {AcceptedDomainSDKType} from "@bze/bzejs/bze/cointrunk/store";
 
 const LOCAL_STORAGE_PREFIX = 'acceptedDomains:'
 const LOCAL_CACHE_TTL = 1000 * 60 * 30; //30 minutes
@@ -22,7 +22,7 @@ export const getAcceptedDomains = async (): Promise<QueryAcceptedDomainResponseS
     }
     
     let client = await bze.ClientFactory.createLCDClient({restEndpoint: getRestUrl()});
-    let response = await client.bze.cointrunk.v1.acceptedDomain();
+    let response = await client.bze.cointrunk.acceptedDomain();
     let cacheData = {
         acceptedDomainResponse: {...response},
         expiresAt: new Date().getTime() + LOCAL_CACHE_TTL,
@@ -36,9 +36,7 @@ export const getAcceptedDomains = async (): Promise<QueryAcceptedDomainResponseS
 
 export const getActiveAcceptedDomains = async (): Promise<AcceptedDomainSDKType[]> => {
     let ad = await getAcceptedDomains();
-    let filtered = ad.acceptedDomain.filter(ad => ad.active);
-
-    return filtered;
+    return ad.acceptedDomain.filter(ad => ad.active);
 }
 
 export const extractUrlHost = (url: string): string|null => {

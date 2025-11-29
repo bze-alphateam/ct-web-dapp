@@ -19,7 +19,7 @@ export const AnonymousArticleAlert = () => {
             let shouldShowAlert = !(await isPublisher(address));
             if (shouldShowAlert) {
                 let cost = await getAnonArticleCost();
-                setArticleCost(Intl.NumberFormat('en', { notation: 'standard' }).format(cost.div(1000000).toInt()));
+                setArticleCost(Intl.NumberFormat('en', { notation: 'standard' }).format(cost.div(1000000).toNumber()));
     
                 let limit = await getAnonArticleLimit();
                 setArticleLimit(limit.toString());

@@ -1,8 +1,7 @@
 import { Badge } from "@chakra-ui/react"
-import Long from "long";
+import BigNumber from "bignumber.js";
 
-export function respectBadgeParams({respect}: {respect: Long}): {text: string, color: string}|null {
-    respect = Long.fromValue(respect);
+export function respectBadgeParams({respect}: {respect: BigNumber}): {text: string, color: string}|null {
     if (respect.lt(50000000000)) {
         return null;
     }
@@ -19,7 +18,7 @@ export function respectBadgeParams({respect}: {respect: Long}): {text: string, c
     }
 }
 
-export const PublisherRespectBadge = ({respect}: {respect: Long}): JSX.Element => {
+export const PublisherRespectBadge = ({respect}: {respect: BigNumber}): JSX.Element => {
     const params = respectBadgeParams({respect: respect});
     if (!params) {
         return (<></>)
@@ -56,10 +55,10 @@ export const ArticleContentBadge = ({url}: {url: string}): JSX.Element => {
     return (<Badge px='2' m={{base: 1}} colorScheme='orange'>{hostname} content</Badge>)
 }
 
-export const ArticleJustPublished = ({createdAt}: {createdAt: Long}): JSX.Element => {
+export const ArticleJustPublished = ({createdAt}: {createdAt: BigNumber}): JSX.Element => {
     let currentDate = new Date();
     let justPublishedAge = 24 * 60 * 60 * 1000;
-    if ((currentDate.getTime() -  (Long.fromValue(createdAt).toInt() * 1000)) > justPublishedAge ) {
+    if ((currentDate.getTime() -  (createdAt.toNumber() * 1000)) > justPublishedAge ) {
         
         return (<></>)
     }

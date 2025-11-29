@@ -9,7 +9,6 @@ import {
   Error,
   Connected,
   ConnectedShowAddress,
-  ConnectedUserInfo,
   Connecting,
   ConnectStatusWarn,
   CopyAddressBtn,
@@ -18,7 +17,7 @@ import {
   Rejected,
   RejectedWarn,
   WalletConnectComponent,
-} from '../components';
+} from './react';
 import { getChainName } from '../config';
 
 export const WalletSection = () => {
@@ -27,13 +26,10 @@ export const WalletSection = () => {
     connect,
     openView,
     walletStatus,
-    username,
     address,
     message,
     currentChainName,
     currentWallet,
-    currentChainRecord,
-    getChainLogo,
     setCurrentChain,
     isWalletConnected
   } = walletManager;
@@ -43,13 +39,6 @@ export const WalletSection = () => {
       setCurrentChain(getChainName());
     }
   }, [setCurrentChain, isWalletConnected]);
-
-  const chain = {
-    chainName: currentChainName,
-    label: currentChainRecord?.chain.pretty_name,
-    value: currentChainName,
-    icon: getChainLogo(currentChainName),
-  };
 
   // Events
   const onClickConnect: MouseEventHandler = async (e) => {
@@ -99,9 +88,6 @@ export const WalletSection = () => {
     />
   );
 
-  const userInfo = username && (
-    <ConnectedUserInfo username={username}/>
-  );
   const addressBtn = currentChainName && (
     <CopyAddressBtn
       walletStatus={walletStatus}

@@ -18,10 +18,10 @@ import {
   Pagination
 } from '../components';
 import { infoGrid } from '../config';
-import { QueryAllArticlesResponseSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/query';
 import { useEffect, useState } from 'react';
 import { buildLimitPagination, getAllArticles } from '../components/services';
-import { PageRequest } from '@bze/bzejs/types/codegen/cosmos/base/query/v1beta1/pagination';
+import {QueryAllArticlesResponseSDKType} from "@bze/bzejs/bze/cointrunk/query";
+import {PageRequest} from "@bze/bzejs/cosmos/base/query/v1beta1/pagination";
 
 const pageTitleBox: PageTitleProps = {
   title: 'Articles',

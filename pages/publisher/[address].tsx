@@ -10,8 +10,8 @@ import {
 import { PageTitleProps, PublisherListItem, TitleBox, NextHead, Navbar, Footer, InfoGrid } from '../../components';
 import { infoGrid } from '../../config';
 import { useEffect, useState } from 'react';
-import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { getPublisherData } from '../../components/services';
+import {PublisherSDKType} from "@bze/bzejs/bze/cointrunk/store";
 
 const pageTitleBox: PageTitleProps = {
     title: 'CoinTrunk Publisher',
@@ -32,18 +32,18 @@ export default function PublisherPage({address}: {address: string}) {
     const [isLoading, setLoading] = useState(true)
     const [publisherDetails, setPublisherDetails] = useState<PublisherSDKType|null>(null)
     useEffect(() => {
-        if (typeof address === 'string') {
-            getPublisherData(address)
-                .then((publisher) => {
-                    setPublisherDetails(publisher ?? null)
-                    setLoading(false)
-                    pageTitleBox.subTitleHighlighted = publisher?.name ?? ''
-                })
-                .catch((err) => {
-                    console.log(err)
-                    setLoading(false)
-                })
-        }
+        if (!address || address === '') return;
+
+        getPublisherData(address)
+            .then((publisher) => {
+                setPublisherDetails(publisher ?? null)
+                setLoading(false)
+                pageTitleBox.subTitleHighlighted = publisher?.name ?? ''
+            })
+            .catch((err) => {
+                console.log(err)
+                setLoading(false)
+            })
     }, [address]);
     
     return (

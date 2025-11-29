@@ -1,7 +1,6 @@
 import { bze } from '@bze/bzejs';
 import { getRestUrl } from '../../config';
-import { QueryParamsResponseSDKType } from "@bze/bzejs/types/codegen/beezee/cointrunk/query";
-import Long from 'long';
+import {QueryParamsResponseSDKType} from "@bze/bzejs/bze/cointrunk/query";
 
 const LOCAL_STORAGE_KEY = 'cointrunk:params';
 const LOCAL_CACHE_TTL = 1000 * 60 * 30; //30 minutes
@@ -21,7 +20,7 @@ export const getCointrunkParams = async (): Promise<QueryParamsResponseSDKType> 
     }
 
     let client = await bze.ClientFactory.createLCDClient({restEndpoint: getRestUrl()});
-    let response = await client.bze.cointrunk.v1.params();
+    let response = await client.bze.cointrunk.params();
     let cacheData = {
         params: {...response},
         expiresAt: new Date().getTime() + LOCAL_CACHE_TTL,
@@ -39,14 +38,14 @@ export const getAnonArticleLimit = async (): Promise<number> => {
         return 0;
     } 
     
-    return Long.fromValue(params.params.anon_article_limit).toNumber();
+    return (new BigNumber(params.params.anon_article_limit)).toNumber();
 }
 
-export const getAnonArticleCost = async (): Promise<Long> => {
+export const getAnonArticleCost = async (): Promise<BigNumber> => {
     let params = await getCointrunkParams();
     if (params.params === undefined || params.params.anon_article_cost === undefined) {
-        return Long.UZERO;
+        return new BigNumber(0);
     } 
     
-    return Long.fromValue(params.params.anon_article_cost.amount);
+    return new BigNumber(params.params.anon_article_cost.amount);
 }

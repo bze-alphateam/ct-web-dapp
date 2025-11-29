@@ -11,7 +11,6 @@ import {
     FormControl,
     FormLabel,
     Input,
-    Spinner,
     Alert,
     AlertIcon,
     FormHelperText,
@@ -79,7 +78,7 @@ export const PublisherPayRespectModal = ({showModal, publisherName, publisherAdd
           }
     
           const signingClient = await getSigningBzeClient({rpcEndpoint: getRpcUrl(), signer: offlineSigner});
-          const { payPublisherRespect } = bze.cointrunk.v1.MessageComposer.withTypeUrl;
+          const { payPublisherRespect } = bze.cointrunk.MessageComposer.withTypeUrl;
           const payPublisherRespectMsg = payPublisherRespect({
             creator: walletAddress,
             address: publisherAddress,

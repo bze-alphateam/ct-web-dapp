@@ -1,6 +1,7 @@
-import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
+
 import { MouseEventHandler, ReactNode } from 'react';
 import { IconType } from 'react-icons';
+import {PublisherSDKType} from "@bze/bzejs/bze/cointrunk/store";
 
 export interface ChooseChainInfo {
   chainName: string;

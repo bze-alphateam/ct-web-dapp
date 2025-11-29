@@ -13,7 +13,6 @@ import {
     FormLabel,
     FormHelperText,
     Input,
-    Spinner,
     useToast,
     Textarea
   } from '@chakra-ui/react';
@@ -25,7 +24,7 @@ import { bze, getSigningBzeClient } from '@bze/bzejs';
 import { getMinDenom, getRpcUrl } from '../config';
 import { coins } from '@cosmjs/stargate';
 import { Dec, IntPretty } from '@keplr-wallet/unit';
-import { AcceptedDomainSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/accepted_domain';
+import {AcceptedDomainSDKType} from "@bze/bzejs/bze/cointrunk/store";
 
 export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModal: boolean, onClose: () => void, onSubmitSuccess: () => void}) => {
     const [ isValidTitle, setIsValidTitle ] = useState(false);
@@ -185,7 +184,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
         }
 
         const signingClient = await getSigningBzeClient({rpcEndpoint: getRpcUrl(), signer: offlineSigner});
-        const { addArticle } = bze.cointrunk.v1.MessageComposer.withTypeUrl;
+        const { addArticle } = bze.cointrunk.MessageComposer.withTypeUrl;
         const msg = addArticle({
             publisher: address,
             title: title,
@@ -252,7 +251,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
                         <FormLabel>Title <Tooltip label='Provide a descriptive title. Readers should be attracted to click on it.'><QuestionIcon mb={1}/></Tooltip></FormLabel>
                         <Textarea name='title' placeholder='Text between 10 and 320 chars' onChange={onTitleChange} onBlur={validateTitle}/>
                         {
-                            isValidTitle === true ?
+                            isValidTitle ?
                             <FormHelperText>OK! <CheckIcon color={'green'}/></FormHelperText> :
                             titleError.length > 0 ? 
                             <FormHelperText>{titleError} <CloseIcon color={'red'}/></FormHelperText> :
@@ -263,7 +262,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
                         <FormLabel>URL <Tooltip label={'Accepted domains: ' + acceptedDomainsList}><QuestionIcon mb={1}/></Tooltip></FormLabel>
                         <Input name='url' type={'text'} placeholder='Article source URL' onChange={onUrlChange}  onBlur={validateUrl}/>
                         {
-                            isValidUrl === true ?
+                            isValidUrl ?
                             <FormHelperText>OK! <CheckIcon color={'green'}/></FormHelperText> :
                             urlError.length > 0 ? 
                             <FormHelperText>{urlError} <CloseIcon color={'red'}/></FormHelperText> :
@@ -274,7 +273,7 @@ export const ArticleAddModal = ({showModal, onClose, onSubmitSuccess}: {showModa
                         <FormLabel>Picture URL <Tooltip label='Optional: provide a picture to be displayed in article listing'><QuestionIcon mb={1}/></Tooltip></FormLabel>
                         <Input name='picture' type={'text'} placeholder='A picture for your article' onChange={onPictureChange}  onBlur={validatePicture}/>
                         {
-                            isValidPicture === true ?
+                            isValidPicture ?
                             <FormHelperText>OK! <CheckIcon color={'green'}/></FormHelperText> :
                             pictureError.length > 0 ?
                             <FormHelperText>{pictureError} <CloseIcon color={'red'}/></FormHelperText> :

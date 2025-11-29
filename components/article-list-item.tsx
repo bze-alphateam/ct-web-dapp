@@ -13,14 +13,13 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { stringTruncateFromCenter } from './react';
-import { ArticleSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/article';
-import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
 import { useState, useEffect } from 'react';
 import { respectBadgeParams, ArticleContentBadge, ArticleJustPublished } from './badges';
-import Long from "long";
 import { getExplorerBaseUrl } from '../config';
 import { getPublisherData } from './services';
 import Link from 'next/link';
+import {ArticleSDKType, PublisherSDKType} from "@bze/bzejs/bze/cointrunk/store";
+import BigNumber from 'bignumber.js';
 
 export const ArticleListItem = ({id, title, url, picture, publisher, paid, created_at }: ArticleSDKType) => {
   const [isLoading, setLoading] = useState(true)
@@ -33,7 +32,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
       getPublisherData(publisher)
         .then((publisher) => {
             setPublisherDetails(publisher ?? null);
-            setLocalRespectBadgeParams(publisher ? respectBadgeParams({respect: publisher.respect}) : null);
+            setLocalRespectBadgeParams(publisher ? respectBadgeParams({respect: new BigNumber(publisher.respect)}) : null);
             setLoading(false);
           }
         )
@@ -71,11 +70,11 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
           <Flex padding={2} justifyContent={'center'} direction={{base: 'column'}} flex={'100%'}>
             <Flex p={2}>
               <UiLink href={url} target="_blank" _hover={{ textDecoration: 'none' }}>
-                <Heading fontSize={{base: '18px', md: '22px'}}> #{Long.fromValue(id).toInt()}.{' '}{title}{' '}<ExternalLinkIcon mx='1px'/></Heading>
+                <Heading fontSize={{base: '18px', md: '22px'}}> #{new BigNumber(id).toFixed(0)}.{' '}{title}{' '}<ExternalLinkIcon mx='1px'/></Heading>
               </UiLink>
             </Flex>
             <Flex p={2} wrap={'wrap'} m={1}>
-              <ArticleJustPublished createdAt={created_at} />
+              <ArticleJustPublished createdAt={new BigNumber(created_at)} />
               <ArticleContentBadge url={url} />
               {localRespectBadgeParams && (<Badge px='2' m={{base: 1}} colorScheme={localRespectBadgeParams.color}>{localRespectBadgeParams.text}</Badge>)}
               {
@@ -101,7 +100,7 @@ export const ArticleListItem = ({id, title, url, picture, publisher, paid, creat
                         minute: '2-digit',
                         hour12: false,
                       }
-                    ).format(Long.fromValue(created_at).toInt() * 1000)
+                    ).format(new BigNumber(created_at).toNumber() * 1000)
                   }
                   {' '}&bull;{' '}
                   {isLoading ?

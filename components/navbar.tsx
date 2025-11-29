@@ -15,7 +15,7 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import { JsonObject } from '@cosmjs/cosmwasm-stargate';
-import { WalletSection } from '../components';
+import { WalletSection } from './wallet';
 import { ArticleAddModal } from './article-add-modal';
 import { useWallet } from '@cosmos-kit/react';
 import Link from 'next/link'

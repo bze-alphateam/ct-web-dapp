@@ -15,12 +15,12 @@ import {
 import { PublisherArticlesCountBadge, PublisherRespectBadge } from './badges';
 import { ConnectedShowAddress } from './react'
 import { StarIcon, EditIcon, CalendarIcon } from '@chakra-ui/icons';
-import { PublisherSDKType } from '@bze/bzejs/types/codegen/beezee/cointrunk/publisher';
-import Long from 'long';
 import { useState } from 'react';
 import { useWallet } from "@cosmos-kit/react"
 import { clearPublisherFromLocalStorage, getPublisherData } from './services';
 import { PublisherPayRespectModal } from './publisher-pay-respect-modal';
+import {PublisherSDKType} from "@bze/bzejs/bze/cointrunk/store";
+import BigNumber from 'bignumber.js';
 
 
 export const PublisherListItem = ({name, address, active, articles_count, created_at, respect }: PublisherSDKType) => {
@@ -114,7 +114,7 @@ export const PublisherListItem = ({name, address, active, articles_count, create
             <Box p={4}>
               <Stat>
                 <StatLabel>Since <CalendarIcon mb={1}/></StatLabel>
-                <StatNumber>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short',day: '2-digit',}).format(Long.fromValue(created_at).toInt() * 1000) }</StatNumber>
+                <StatNumber>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short',day: '2-digit',}).format((new BigNumber(created_at)).toNumber() * 1000) }</StatNumber>
               </Stat>
             </Box>
             <Spacer />
@@ -128,13 +128,13 @@ export const PublisherListItem = ({name, address, active, articles_count, create
             <Box p='4'>
               <Stat>
                 <StatLabel>Respect <StarIcon mb={1}/></StatLabel>
-                <StatNumber>{respectLoading ? (<Spinner size='xs' />) : Intl.NumberFormat('en', { notation: 'standard' }).format(Long.fromValue(loadedRespect).div(1000000).toInt())}</StatNumber>
+                <StatNumber>{respectLoading ? (<Spinner size='xs' />) : Intl.NumberFormat('en', { notation: 'standard' }).format((new BigNumber(loadedRespect)).div(1000000).toNumber())}</StatNumber>
               </Stat>
             </Box>
           </Flex>
           <Flex p={1}>
             <Box p={4}>
-              <PublisherRespectBadge respect={loadedRespect}/>
+              <PublisherRespectBadge respect={new BigNumber(loadedRespect)}/>
               <PublisherArticlesCountBadge articlesCount={articles_count}/>
             </Box>
             <Spacer />
